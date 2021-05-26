@@ -4,4 +4,4 @@ run:
 	if [ ! -d $(DIR) ]; then \
 		npm install; \
 	fi
-	npm run start
+	npm run start:dev

@@ -6,6 +6,8 @@ services:
         tty: true
         volumes:
             - "./frontend:/app"
+        environment:
+            CHOKIDAR_USEPOLLING: 1
         ports:
             - 3000:3000
         command: yarn start
@@ -14,11 +16,13 @@ services:
     backend:
         build: ./backend
         tty: true
+        environment:
+            CHOKIDAR_USEPOLLING: 1
         volumes:
             - "./backend:/app"
         ports:
             - 8000:8000
-        command: npm run start
+        command: npm run start:dev
 
         
     mysql:

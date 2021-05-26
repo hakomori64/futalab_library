@@ -1,20 +1,25 @@
 version: "3"
 
 services:
-    web:
-        image: nginx:1.13.5-alpine
+    frontend:
+        build: ./frontend
+        tty: true
+        volumes:
+            - "./frontend:/app"
         ports:
-            - "80:80"
-        depends_on:
-            - app
-        volumes:
-            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-            - ./app:/var/www/html
+            - 3000:3000
+        command: yarn start
+
     
-    app:
-        build: ./app
+    backend:
+        build: ./backend
+        tty: true
         volumes:
-            - ./app:/var/www/html
+            - "./backend:/app"
+        ports:
+            - 8000:8000
+        command: npm run start
+
         
     mysql:
         image: mysql:5.7

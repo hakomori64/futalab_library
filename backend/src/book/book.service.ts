@@ -13,11 +13,11 @@ export class BookService {
   ) {}
   
   create(createBookDto: CreateBookDto) {
-    return 'This action adds a new book';
+    return this.bookRepository.save(createBookDto);
   }
 
   findAll() {
-    return this.bookRepository.find();
+    return this.bookRepository.find({ relations: ["rentals"] });
   }
 
   findOne(id: number) {
@@ -25,7 +25,7 @@ export class BookService {
   }
 
   update(id: number, updateBookDto: UpdateBookDto) {
-    return `This action updates a #${id} book`;
+    return this.bookRepository.save({ ...updateBookDto, id: Number(id) });
   }
 
   async remove(id: number): Promise<void> {

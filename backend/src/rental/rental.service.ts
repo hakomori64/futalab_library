@@ -13,19 +13,21 @@ export class RentalService {
   ) {}
 
   create(createRentalDto: CreateRentalDto) {
-    return 'This action adds a new rental';
+    return this.rentalRepository.save({
+      ...createRentalDto,
+    });
   }
 
   findAll() {
-    return this.rentalRepository.find();
+    return this.rentalRepository.find({ relations: ["book"] });
   }
 
   findOne(id: number) {
-    return this.rentalRepository.findOne(id);
+    return this.rentalRepository.findOne(id, { relations: ["book"] });
   }
 
   update(id: number, updateRentalDto: UpdateRentalDto) {
-    return `This action updates a #${id} rental`;
+    return this.rentalRepository.save({ ...updateRentalDto, id: Number(id) });
   }
 
   async remove(id: number) : Promise<void> {

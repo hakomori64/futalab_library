@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Logger } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Logger, Put } from '@nestjs/common';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
@@ -16,11 +16,7 @@ export class BookController {
   }
 
   @Get()
-  async findAll() {
-    const books: Book[] = await this.bookService.findAll();
-    for (const book of books) {
-      this.logger.log(book.rentals);
-    }
+  findAll() {
     return this.bookService.findAll();
   }
 
@@ -29,7 +25,7 @@ export class BookController {
     return this.bookService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateBookDto: UpdateBookDto) {
     return this.bookService.update(+id, updateBookDto);
   }

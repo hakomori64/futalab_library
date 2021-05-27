@@ -17,4 +17,7 @@ export class Book {
 
     @OneToMany((type) => Rental, (rental) => rental.book)
     rentals: Rental[];
+
+    @Column()
+    cover_image_url: string;
 }

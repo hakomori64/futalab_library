@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BookModule } from './book/book.module';
 import { RentalModule } from './rental/rental.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -25,6 +26,9 @@ import { RentalModule } from './rental/rental.module';
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: false,
       })
+    }),
+    MulterModule.register({
+      dest: './photos',
     }),
     BookModule,
     RentalModule

@@ -8,7 +8,7 @@ import './App.css';
 import Header from './widgits/Header';
 import Home from './components/Home/Home';
 import Books from './components/Books/Books';
-import Borrows from './components/Borrows/Borrows';
+import Rentals from './components/Rentals/Rentals';
 
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/books" component={Books} />
-          <Route exact path="/borrows" component={Borrows} />
+          <Route exact path="/rentals" component={Rentals} />
         </Switch>
       </Container>
     </Router>

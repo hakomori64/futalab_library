@@ -40,7 +40,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $query_err = false;
 
         // Prepare an insert statement
-        $sql = "INSERT INTO borrows (borrower_name, book_id, quantity) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO rentals (borrower_name, book_id, quantity) VALUES (?, ?, ?)";
 
         if($stmt = $mysqli->prepare($sql)){
             // Bind variables to the prepared statement as parameters
@@ -52,7 +52,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             
             // Attempt to execute the prepared statement
             if(!$stmt->execute()){
-                echo "borrows insertion errror";
+                echo "rentals insertion errror";
                 $query_err = true;
             }
         }
@@ -79,7 +79,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             echo "クエリ中にエラーが発生しました。借りられない本を指定していたり、指定した数量に誤りがある可能性があります。";
         } else {
             if ($mysqli->commit()) {
-                header("location: /borrows/index.php");
+                header("location: /rentals/index.php");
                 exit();
             } else {
                 echo "クエリ中にエラーが発生しました";

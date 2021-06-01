@@ -17,11 +17,11 @@ export class BookService {
   }
 
   findAll() {
-    return this.bookRepository.find({ relations: ["rentals"] });
+    return this.bookRepository.find({ relations: ["borrows", "returns"] });
   }
 
   findOne(id: number) {
-    return this.bookRepository.findOne(id);
+    return this.bookRepository.findOne(id, { relations: ["borrows", "returns"] });
   }
 
   update(id: number, updateBookDto: UpdateBookDto) {
@@ -30,5 +30,9 @@ export class BookService {
 
   async remove(id: number): Promise<void> {
     await this.bookRepository.delete(id);
+  }
+
+  async setPhoto(id: number, photo_url: string) {
+    await this.bookRepository.save({ id: id, photo_url: photo_url });
   }
 }

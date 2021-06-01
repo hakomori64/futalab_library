@@ -17,11 +17,11 @@ export class BookService {
   }
 
   findAll() {
-    return this.bookRepository.find({ relations: ["rentals"] });
+    return this.bookRepository.find({ relations: ["borrows", "returns"] });
   }
 
   findOne(id: number) {
-    return this.bookRepository.findOne(id);
+    return this.bookRepository.findOne(id, { relations: ["borrows", "returns"] });
   }
 
   update(id: number, updateBookDto: UpdateBookDto) {

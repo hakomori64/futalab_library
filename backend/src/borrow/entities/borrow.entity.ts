@@ -1,18 +1,18 @@
 import { Book } from 'src/book/entities/book.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 
-@Entity({name: 'rentals'})
-export class Rental {
+@Entity({name: 'borrows'})
+export class Borrow {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column({ length: 100 })
-    borrower_name: string;
+    user_name: string;
 
     @Column()
     book_id: number;
 
-    @ManyToOne(type => Book, (book) => book.rentals)
+    @ManyToOne(type => Book, (book) => book.borrows)
     @JoinColumn({
         name: 'book_id',
         referencedColumnName: 'id'

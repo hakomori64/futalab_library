@@ -6,7 +6,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <div class="navbar-nav">
             <a href="/books" class="nav-item nav-link text-white">Books</a>
-            <a href="/rentals" class="nav-item nav-link text-white">Rentals</a>
+            <a href="/borrows" class="nav-item nav-link text-white">Borrows</a>
         </div>
     </div>
 </nav>

@@ -14,8 +14,8 @@ const Header = () => (
                 <LinkContainer to='/books'>
                     <Nav.Link>Books</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to='/rentals'>
-                    <Nav.Link>Rentals</Nav.Link>
+                <LinkContainer to='/borrows'>
+                    <Nav.Link>Borrows</Nav.Link>
                 </LinkContainer>
             </Nav>
         </Navbar.Collapse>

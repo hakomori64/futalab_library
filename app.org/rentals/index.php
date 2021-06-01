@@ -17,15 +17,15 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="mt-5 mb-3 clearfix">
-                        <h2 class="pull-left">Rental History</h2>
-                        <a href="/rentals/create.php" class="btn btn-success pull-right"><i class="fa fa-plus"></i>本を借りる</a>
+                        <h2 class="pull-left">Borrow History</h2>
+                        <a href="/borrows/create.php" class="btn btn-success pull-right"><i class="fa fa-plus"></i>本を借りる</a>
                     </div>
                     <?php
                     // Include config file
                     require_once "../config.php";
                     
                     // Attempt select query execution
-                    $sql = 'SELECT rentals.id as id, rentals.borrower_name as borrower_name, books.title as title, rentals.date as date, rentals.quantity as quantity FROM rentals AS rentals INNER JOIN books as books ON rentals.book_id = books.id';
+                    $sql = 'SELECT borrows.id as id, borrows.borrower_name as borrower_name, books.title as title, borrows.date as date, borrows.quantity as quantity FROM borrows AS borrows INNER JOIN books as books ON borrows.book_id = books.id';
                     if($result = $mysqli->query($sql)){
                         if($result->num_rows > 0){
                             echo '<table class="table table-bordered table-striped">';
@@ -47,8 +47,8 @@
                                         echo "<td>" . $row['date'] . "</td>";
                                         echo "<td>" . $row['quantity'] . "</td>";
                                         echo "<td>";
-                                            echo '<a href="/rentals/update.php?id='. $row['id'] .'" class="mr-3" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>';
-                                            echo '<a href="/rentals/delete.php?id='. $row['id'] .'" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
+                                            echo '<a href="/borrows/update.php?id='. $row['id'] .'" class="mr-3" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>';
+                                            echo '<a href="/borrows/delete.php?id='. $row['id'] .'" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
                                         echo "</td>";
                                     echo "</tr>";
                                 }

@@ -4,8 +4,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BookModule } from './book/book.module';
-import { RentalModule } from './rental/rental.module';
+import { BorrowModule } from './borrow/borrow.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { ReturnModule } from './return/return.module';
 
 @Module({
   imports: [
@@ -31,7 +32,8 @@ import { MulterModule } from '@nestjs/platform-express';
       dest: './photos',
     }),
     BookModule,
-    RentalModule
+    BorrowModule,
+    ReturnModule
   ],
   controllers: [AppController],
   providers: [AppService],

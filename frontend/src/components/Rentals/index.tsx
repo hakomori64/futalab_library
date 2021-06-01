@@ -17,7 +17,7 @@ const Rentals = () => {
     const handleShow = () => setShow(true);
 
     return (
-        <div>
+        <>
             <h1>Rental history</h1>
             <Table striped>
                 <thead>
@@ -64,7 +64,7 @@ const Rentals = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </div>
+        </>
     );
 }
 

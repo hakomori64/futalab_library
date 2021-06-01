@@ -8,5 +8,8 @@ export class CreateBookDto {
     readonly isbn: string;
 
     @ApiProperty()
+    readonly cover_image_url: string;
+
+    @ApiProperty()
     readonly quantity: number;
 }

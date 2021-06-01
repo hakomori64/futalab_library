@@ -10,7 +10,7 @@ import Home from './components/Home';
 import Books from './components/Books';
 import Rentals from './components/Rentals';
 import Information from "./components/Information";
-import AddingBooks from "./components/AddingBooks";
+import RegisteringBooks from "./components/RegisteringBooks";
 import Borrowing from "./components/Borrowing";
 
 
@@ -24,7 +24,7 @@ function App() {
           <Route exact path="/books" component={Books} />
           <Route exact path="/rentals" component={Rentals} />
           <Route exact path="/Info/:id" component={Information} />
-          <Route exact path="/Add" component={AddingBooks} />
+          <Route exact path="/Register" component={RegisteringBooks} />
           <Route exact path="/Borrow" component={Borrowing} />
         </Switch>
       </Container>

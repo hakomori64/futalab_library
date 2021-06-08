@@ -54,13 +54,5 @@ const Books = () => (
         ))}
     </CardDeck>
 );
-/*<ListGroup horizontal variant="flush">
-            <ListGroup.Item active>ID</ListGroup.Item>
-            <ListGroup.Item>Title</ListGroup.Item>
-            <ListGroup.Item>残り冊数</ListGroup.Item>
-            <ListGroup.Item >Info</ListGroup.Item>
-            <ListGroup.Item >+</ListGroup.Item>
-            <ListGroup.Item >-</ListGroup.Item>
-            <ListGroup.Item >remove</ListGroup.Item>
-        </ListGroup>*/
+
 export default Books;

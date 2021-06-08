@@ -1,9 +1,10 @@
 import { FC } from "react";
-import { Button, Table } from "react-bootstrap";
+import { Button, Form, Table } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import {
     RouteComponentProps
 } from 'react-router-dom';
-import noimage from "./../Books/NoImage.svg";
+import noimage from "./../../img/NoImage.svg";
 
 type BookIdProps = RouteComponentProps<{
     id: string;
@@ -17,7 +18,11 @@ const Information: FC<BookIdProps> = (props) => {
             <h1>This is book {id} information page.</h1>
             <img src={noimage} />
             <h1>Hoge</h1>
-            <Button>借りる</Button>
+            <LinkContainer to={'/borrow/'+id}>
+                <Button>
+                    借りる
+                </Button>
+            </LinkContainer>
             <Table>
                 <tbody>
                     <tr>

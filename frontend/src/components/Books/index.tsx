@@ -9,7 +9,7 @@ import {
 import {
     LinkContainer,
 } from 'react-router-bootstrap';
-import noimage from "./NoImage.svg";
+import noimage from "./../../img/NoImage.svg";
 
 const BooksInfoTable = () => (
     <Table borderless>

@@ -25,7 +25,7 @@ function App() {
           <Route exact path="/rentals" component={Rentals} />
           <Route exact path="/info/:id" component={Information} />
           <Route exact path="/register" component={RegisteringBooks} />
-          <Route exact path="/borrow" component={Borrowing} />
+          <Route exact path="/borrow/:id" component={Borrowing} />
         </Switch>
       </Container>
     </Router>

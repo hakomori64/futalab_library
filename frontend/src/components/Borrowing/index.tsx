@@ -1,7 +1,14 @@
+import { Form } from "react-bootstrap";
+
 const Borrowing = () => (
-    <div>
+    <>
         <h1>This is the page to borrow books.</h1>
-    </div>
+        <Form>
+            名前:<input type="text" />
+            借りる数:<input type="number" />
+            <input type="submit" />
+        </Form>
+    </>
 );
 
 export default Borrowing;

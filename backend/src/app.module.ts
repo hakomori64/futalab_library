@@ -7,6 +7,8 @@ import { BookModule } from './book/book.module';
 import { BorrowModule } from './borrow/borrow.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { ReturnModule } from './return/return.module';
+import { PhotosModule } from './photos/photos.module';
+import { RentalsModule } from './rentals/rentals.module';
 
 @Module({
   imports: [
@@ -25,7 +27,7 @@ import { ReturnModule } from './return/return.module';
         password: configService.get("DATABASE_PASSWORD"),
         database: configService.get("DATABASE_NAME"),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: false,
+        synchronize: true,
       })
     }),
     MulterModule.register({
@@ -33,7 +35,9 @@ import { ReturnModule } from './return/return.module';
     }),
     BookModule,
     BorrowModule,
-    ReturnModule
+    ReturnModule,
+    PhotosModule,
+    RentalsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

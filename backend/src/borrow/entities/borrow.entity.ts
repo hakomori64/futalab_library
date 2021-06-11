@@ -21,4 +21,7 @@ export class Borrow {
 
     @Column()
     quantity: number;
+
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    date: Date;
 }

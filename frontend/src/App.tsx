@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import './App.css';
-import Header from './widgits/header';
+import Header from './widgits/Header';
 import Home from './components/Home';
 import Books from './components/Books';
 import Rentals from './components/Rentals';

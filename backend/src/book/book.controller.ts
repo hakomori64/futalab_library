@@ -3,6 +3,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
+import { SetBookDto } from './dto/set-book.dto';
 import { Book } from './entities/book.entity';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
@@ -32,6 +33,20 @@ export class BookController {
     return this.bookService.findOne(+id);
   }
 
+  @Put(':id/increment')
+  incrementQuantity(@Param('id') id: string) {
+    return this.bookService.set(+id, {
+      quantity: () => "quantity + 1"
+    });
+  }
+
+  @Put(':id/decrement')
+  decrementQuantity(@Param('id') id: string) {
+    return this.bookService.set(+id, {
+      quantity: () => "quantity - 1"
+    });
+  }
+
   @Put(':id')
   update(@Param('id') id: string, @Body() updateBookDto: UpdateBookDto) {
     return this.bookService.update(+id, updateBookDto);
@@ -40,25 +55,5 @@ export class BookController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.bookService.remove(+id);
-  }
-
-  @Post('cover_image')
-  @UseInterceptors(FileInterceptor('cover_image', {
-    storage: diskStorage({
-      destination: (req, file, cb) => {
-        cb(null, './photos')
-      },
-      filename: (req, file, cb) => {
-        console.log(file);
-        const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('')
-        cb(null, `${randomName}${extname(file.originalname)}`)
-      }
-    })
-  }))
-  uploadCoverImage(@UploadedFile() file: Express.Multer.File) {
-    this.logger.log(file);
-    return {
-      'cover_image_url': `${this.configService.get("SERVER_URL")}${file.path}`
-    };
   }
 }

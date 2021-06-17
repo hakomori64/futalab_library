@@ -1,3 +1,7 @@
+import {
+    useEffect,
+    useState 
+} from 'react';
 import { 
     Card,
     Table,
@@ -9,26 +13,44 @@ import {
 import {
     LinkContainer,
 } from 'react-router-bootstrap';
+import { isBindingElement } from 'typescript';
 import noimage from "./../../img/NoImage.svg";
+const axios = require('axios');
 
-const BooksInfoTable = () => (
-    <Table borderless>
+interface BooksInfoTableProps {
+    isbn: string;
+    quantity: number;
+}
+
+const BooksInfoTable = ({ isbn, quantity}: BooksInfoTableProps) => {
+
+    return (<Table borderless>
         <tbody>
             <tr>
                 <th>ISBN</th>
-                <td className="text-center">{"XXXXXXXXXX"}</td>
+                <td className="text-center">{isbn}</td>
             </tr>
             <tr>
                 <th>残り冊数</th>
-                <td className="text-center">{12}</td>
+                <td className="text-center">{quantity}</td>
             </tr>
         </tbody>
-    </Table>
-);
+    </Table>);
+};
 
-const Books = () => (
-    <CardDeck>
-        {['Hello', 'Hi', 'How are U?', 'I\'m fine.', 'Hello', 'Hi', 'How are U?', 'I\'m fine.'].map((book_info, idx) => (
+const Books = () => {
+    const [books, setBooks] = useState([]);
+    useEffect(() => {
+        (async () => {
+            const res = await fetch('http://localhost:3001/api/books');
+            setBooks(await res.json());
+        })();
+    }, []);
+
+    console.log(books);
+
+    return (<CardDeck>
+        {books.map((book_info, idx) => (
             <Col className="container-fluid mt-4 px-0" key={idx}>
                 <Card key={idx}>
                     <Card.Header>
@@ -41,10 +63,10 @@ const Books = () => (
                             </Nav.Item>
                         </Nav>
                     </Card.Header>
-                    <Card.Img variant="top" src={noimage} />
+                    <Card.Img variant="top" src={book_info['cover_image_url'] !== "" ? book_info['cover_image_url'] : noimage} />
                     <Card.Body>
-                        <Card.Title>{book_info}</Card.Title>
-                        <BooksInfoTable />
+                        <Card.Title>{book_info['title']}</Card.Title>
+                        <BooksInfoTable isbn={book_info['isbn']} quantity={book_info['quantity']} />
                         <LinkContainer to={'/info/'+idx}>
                             <Button >Show detail</Button>
                         </LinkContainer>
@@ -52,7 +74,7 @@ const Books = () => (
                 </Card>
             </Col>
         ))}
-    </CardDeck>
-);
+    </CardDeck>);
+}
 
 export default Books;

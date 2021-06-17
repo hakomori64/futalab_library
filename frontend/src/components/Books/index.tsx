@@ -9,7 +9,7 @@ import {
 import {
     LinkContainer,
 } from 'react-router-bootstrap';
-import noimage from "./NoImage.svg";
+import noimage from "./../../img/NoImage.svg";
 
 const BooksInfoTable = () => (
     <Table borderless>
@@ -54,13 +54,5 @@ const Books = () => (
         ))}
     </CardDeck>
 );
-/*<ListGroup horizontal variant="flush">
-            <ListGroup.Item active>ID</ListGroup.Item>
-            <ListGroup.Item>Title</ListGroup.Item>
-            <ListGroup.Item>残り冊数</ListGroup.Item>
-            <ListGroup.Item >Info</ListGroup.Item>
-            <ListGroup.Item >+</ListGroup.Item>
-            <ListGroup.Item >-</ListGroup.Item>
-            <ListGroup.Item >remove</ListGroup.Item>
-        </ListGroup>*/
+
 export default Books;

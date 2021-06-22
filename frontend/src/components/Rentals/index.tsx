@@ -8,15 +8,49 @@ import {
     Button,
     Modal,
 } from 'react-bootstrap';
+import { useHistory } from 'react-router';
+import { Rental } from '../../types';
 import returnArrow from "./return_arrow.webp";
 
 
 const Rentals = () => {
+    const history = useHistory()
+
     const [show, setShow] = useState(false);
+    const [selectedRental, setSelectedRental] = useState({} as Rental);
     const [rentals, setRentals] = useState([])
     
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => {
+        setShow(false);
+        setSelectedRental({} as Rental);
+    };
+
+    const handleShow = (rental: Rental) => {
+        setShow(true);
+        setSelectedRental(rental);
+    };
+
+    const handleConfirm = async () => {
+        console.log("returning content")
+        const res = await fetch('http://localhost:3001/api/returns', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "user_name": selectedRental.user_name,
+                "quantity": selectedRental.quantity,
+                "book_id": selectedRental.book_id
+            })
+        });
+
+        console.log("res.status " + res.status);
+
+        if (res.status == 201) {
+            history.go(0);
+        }
+    };
 
     useEffect(() => {
         (async () => {
@@ -52,7 +86,7 @@ const Rentals = () => {
                             <td>
                                 {
                                     rental['type'] == 'borrow' ?
-                                        <Image src={returnArrow} style={{width:"18px", cursor: "pointer"}} onClick={handleShow} rounded /> :
+                                        <Image src={returnArrow} style={{width:"18px", cursor: "pointer"}} onClick={() => handleShow(rental)} rounded /> :
                                         <div></div>
                                 }
                             </td>
@@ -68,7 +102,7 @@ const Rentals = () => {
                     <Modal.Title>Do you return the book?</Modal.Title>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="dark">
+                    <Button variant="dark" onClick={handleConfirm}>
                         Yes
                     </Button>
                     <Button variant="secondary" onClick={handleClose}>

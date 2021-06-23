@@ -47,7 +47,7 @@ const Rentals = () => {
 
         console.log("res.status " + res.status);
 
-        if (res.status == 201) {
+        if (res.status === 201) {
             history.go(0);
         }
     };
@@ -85,7 +85,7 @@ const Rentals = () => {
                             <td>{rental['quantity']}</td>
                             <td>
                                 {
-                                    rental['type'] == 'borrow' ?
+                                    rental['type'] === 'borrow' ?
                                         <Image src={returnArrow} style={{width:"18px", cursor: "pointer"}} onClick={() => handleShow(rental)} rounded /> :
                                         <div></div>
                                 }

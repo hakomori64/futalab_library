@@ -3,7 +3,7 @@ import React, {
     useEffect,
     useState
 } from 'react';
-import { Button, Form, FormControl } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import {
     RouteComponentProps, useHistory,
 } from 'react-router-dom';
@@ -31,10 +31,16 @@ const Borrowing: FC<BookIdProps> = (props) => {
             const res = await fetch(`http://localhost:3001/api/books/` + id);
             setBook(await res.json());
         })()
-    }, [])
+    })
+
+    // 履歴を見て過去何冊借りられたか総和を求める
     const borrow_nums = (book.borrows ?? []).reduce((sum, borrow) => sum + borrow['quantity'], 0);
+    // 履歴を見て過去何冊返却されたか総和を求める
     const return_nums = (book.returns ?? []).reduce((sum, rtn) => sum + rtn['quantity'], 0);
-    const remain = book.quantity - borrow_nums + return_nums;
+    // 以上の変数を用いて、
+    // 最大冊数(book['quantity']) - 過去何冊借りられたか(borrow_num) + 過去何冊返却されたか(return_num)
+    // で、今研究室に何冊残っているかを求められる
+    const remain_books = book.quantity - borrow_nums + return_nums;
 
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log("handleNameChange");
@@ -53,16 +59,16 @@ const Borrowing: FC<BookIdProps> = (props) => {
         console.log("num " + bookNum);
 
         let errorOccured = false;
-        if (bookNum < 0) {
-            setBookNumErr("借りる冊数は０より大きい値を指定してください。");
+        if (bookNum <= 0) {
+            setBookNumErr("0冊以下は借りられません");
             errorOccured = true;
         }
-        if (remain - bookNum < 0) {
+        if (remain_books - bookNum < 0) {
             setBookNumErr("借りすぎです");
             errorOccured = true;
         }
-        if (name.length == 0) {
-            setNameErr("あなたの名前を入力してください。");
+        if (name.length === 0) {
+            setNameErr("借りる人の名前を入力してください。");
             errorOccured = true;
         }
 
@@ -80,7 +86,7 @@ const Borrowing: FC<BookIdProps> = (props) => {
                 })
             });
 
-            if (res.status == 201) {
+            if (res.status === 201) {
                 history.replace('/rentals');
             }
         }
@@ -88,7 +94,7 @@ const Borrowing: FC<BookIdProps> = (props) => {
 
     return (
         <>
-            <h1>{book.title} レンタル要求</h1>
+            <h1 style={{fontFamily: "Georgia, serif, sans-serif"}}>{book.title} を借りる</h1>
             <Form onSubmit={handleSubmit} >
                 <Form.Group controlId="formUserName">
                     <Form.Label>
@@ -100,8 +106,9 @@ const Borrowing: FC<BookIdProps> = (props) => {
                         value={name}
                         onChange={handleNameChange}
                     />
+                    {nameErr !== "" ? <span className="small text-danger" >{nameErr}</span> : <></>}
                 </Form.Group>
-                <Form.Group controlId="formNumOfBooks">
+                <Form.Group controlId="formBorrowBooksQuantity">
                     <Form.Label>
                         借りる冊数
                     </Form.Label>
@@ -112,6 +119,7 @@ const Borrowing: FC<BookIdProps> = (props) => {
                         value={bookNum}
                         onChange={handleBookNumChange}
                     />
+                    {bookNumErr !== "" ? <span className="small text-danger" >{bookNumErr}</span> : <></>}
                 </Form.Group>
                 <Button type="submit">
                     Submit

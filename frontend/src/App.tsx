@@ -1,19 +1,14 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch
-} from 'react-router-dom';
-import { Container } from 'react-bootstrap';
-import './App.css';
-import Header from './widgets/Header';
-import Home from './components/Home';
-import Books from './components/Books';
-import Rentals from './components/Rentals';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import "./App.css";
+import Header from "./widgets/Header";
+import Home from "./components/Home";
+import Books from "./components/Books";
+import Rentals from "./components/Rentals";
 import Information from "./components/Information";
 import BookEdit from "./components/BookEdit";
 import RegisteringBooks from "./components/RegisteringBooks";
 import Borrowing from "./components/Borrowing";
-
 
 function App() {
   return (

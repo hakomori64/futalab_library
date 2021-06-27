@@ -92,7 +92,7 @@ const Rentals = () => {
       </Table>
       <Modal show={show} onHide={handleClose}>
         <Modal.Body>
-          <Modal.Title>Do you return the book?</Modal.Title>
+          <Modal.Title>本を返却しますか？</Modal.Title>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="dark" onClick={handleConfirm}>

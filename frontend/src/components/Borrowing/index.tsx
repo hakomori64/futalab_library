@@ -102,11 +102,7 @@ const Borrowing: FC<BookIdProps> = (props) => {
             value={userName}
             onChange={handleNameChange}
           />
-          {userNameErr !== "" ? (
-            <span className="small text-danger">{userNameErr}</span>
-          ) : (
-            <></>
-          )}
+          {userNameErr !== "" && <span className="small text-danger">{userNameErr}</span>}
         </Form.Group>
         <Form.Group controlId="formBorrowBooksQuantity">
           <Form.Label>借りる冊数</Form.Label>
@@ -117,11 +113,7 @@ const Borrowing: FC<BookIdProps> = (props) => {
             value={quantity}
             onChange={handleBookNumChange}
           />
-          {quantityErr !== "" ? (
-            <span className="small text-danger">{quantityErr}</span>
-          ) : (
-            <></>
-          )}
+          {quantityErr !== "" && <span className="small text-danger">{quantityErr}</span>}
         </Form.Group>
         <Button type="submit">送信</Button>
       </Form>

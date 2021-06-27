@@ -17,19 +17,18 @@ type BookIdProps = RouteComponentProps<{
 const BookEdit: FC<BookIdProps> = (props) => {
 	const id = props.match.params.id;
 
-	const [book, setBook] = useState({} as Book);
 	const history = useHistory();
 
-	const [name, setName] = useState("");
-	const [nameErr, setNameErr] = useState("");
+	const [title, setTitle] = useState("");
+	const [titleErr, setTitleErr] = useState("");
 	const [isbn, setIsbn] = useState("");
 	const [isbnErr, setIsbnErr] = useState("");
-	const [numberOfBooks, setNumberOfBooks] = useState(0);
-	const [numberOfBooksErr, setNumberOfBooksErr] = useState("");
+	const [quantity, setQuantity] = useState(0);
+	const [quantityErr, setQuantityErr] = useState("");
 
 	// onChange handlers
 	const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setName(event.target.value);
+		setTitle(event.target.value);
 	};
 
 	const handleIsbnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,28 +36,28 @@ const BookEdit: FC<BookIdProps> = (props) => {
 	};
 
 	const handleNumberOfBooksChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setNumberOfBooks(Number(event.target.value));
+		setQuantity(Number(event.target.value));
 	};
 
 	// handle submit
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		setNameErr("");
+		setTitleErr("");
 		setIsbnErr("");
-		setNumberOfBooksErr("");
+		setQuantityErr("");
 
 		let errorOccured = false;
-		if (name.length === 0) {
-			setNameErr("本の名前を入力してください");
+		if (title.length === 0) {
+			setTitleErr("本の名前を入力してください");
 			errorOccured = true
 		}
 		if (!isbn.match(/^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$/g)) {
 			setIsbnErr("有効なISBNではありません");
 			errorOccured = true;
 		}
-		if (numberOfBooks < 0) {
-			setNumberOfBooksErr("0以上の値を入力してください");
+		if (quantity < 0) {
+			setQuantityErr("0以上の値を入力してください");
 			errorOccured = true;
 		}
 
@@ -71,9 +70,9 @@ const BookEdit: FC<BookIdProps> = (props) => {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					"title": name,
+					"title": title,
 					"isbn": isbn,
-					"quantity": numberOfBooks,
+					"quantity": quantity,
 				})
 			});
 
@@ -89,9 +88,9 @@ const BookEdit: FC<BookIdProps> = (props) => {
 			const res = await fetch(`http://localhost:3001/api/books/` + id);
 			const book: Book = await res.json();
 
-			setName(book.title);
+			setTitle(book.title);
 			setIsbn(book.isbn);
-			setNumberOfBooks(book.quantity);
+			setQuantity(book.quantity);
 		})()
 	}, [])
 
@@ -106,10 +105,10 @@ const BookEdit: FC<BookIdProps> = (props) => {
 					<Form.Control
 						type="text"
 						placeholder="本の名前を入力してください"
-						value={name}
+						value={title}
 						onChange={handleNameChange}
 					/>
-					{nameErr !== "" ? <span className="small text-danger" >{nameErr}</span> : <></>}
+					{titleErr !== "" ? <span className="small text-danger" >{titleErr}</span> : <></>}
 				</Form.Group>
 				<Form.Group>
 					<Form.Label>
@@ -130,10 +129,10 @@ const BookEdit: FC<BookIdProps> = (props) => {
 					<Form.Control
 						type="number"
 						placeholder="研究室で持っている本の冊数を入力してください"
-						value={numberOfBooks}
+						value={quantity}
 						onChange={handleNumberOfBooksChange}
 					/>
-					{numberOfBooksErr !== "" ? <span className="small text-danger" >{numberOfBooksErr}</span> : <></>}
+					{quantityErr !== "" ? <span className="small text-danger" >{quantityErr}</span> : <></>}
 				</Form.Group>
 				<Button type="submit">
 					送信

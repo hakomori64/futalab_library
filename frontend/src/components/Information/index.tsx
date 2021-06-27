@@ -31,8 +31,6 @@ const Information: FC<BookIdProps> = (props) => {
     // 履歴を見て過去何冊返却されたか総和を求める
     const returned_history_sum = (book.returns ?? []).reduce((sum, rtn) => sum + rtn['quantity'], 0);
 
-    console.log(book);
-
     return (
         <>
             <h1>{book['title']}</h1>

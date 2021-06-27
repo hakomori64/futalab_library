@@ -114,11 +114,7 @@ const RegisteringBooks: FC<{}> = () => {
             value={title}
             onChange={handleNameChange}
           />
-          {titleErr !== "" ? (
-            <span className="small text-danger">{titleErr}</span>
-          ) : (
-            <></>
-          )}
+          {titleErr !== "" && <span className="small text-danger">{titleErr}</span>}
         </Form.Group>
         <Form.Group>
           <Form.Label>ISBN</Form.Label>
@@ -128,11 +124,7 @@ const RegisteringBooks: FC<{}> = () => {
             value={isbn}
             onChange={handleIsbnChange}
           />
-          {isbnErr !== "" ? (
-            <span className="small text-danger">{isbnErr}</span>
-          ) : (
-            <></>
-          )}
+          {isbnErr !== "" && <span className="small text-danger">{isbnErr}</span>}
         </Form.Group>
         <Form.Group>
           <Form.Label>在庫数</Form.Label>
@@ -142,25 +134,13 @@ const RegisteringBooks: FC<{}> = () => {
             value={quantity}
             onChange={handleNumberOfBooksChange}
           />
-          {quantityErr !== "" ? (
-            <span className="small text-danger">{quantityErr}</span>
-          ) : (
-            <></>
-          )}
+          {quantityErr !== "" && <span className="small text-danger">{quantityErr}</span>}
         </Form.Group>
         <Form.Group>
           <Form.Label>表紙の画像をアップロードしてください。</Form.Label>
           <Form.File type="file" onChange={handleFileChange}></Form.File>
-          {coverImageUrl !== "" ? (
-            <img src={coverImageUrl} width="120" height="160" />
-          ) : (
-            <div></div>
-          )}
-          {coverImageUrlErr !== "" ? (
-            <span className="small text-danger">{coverImageUrlErr}</span>
-          ) : (
-            <></>
-          )}
+          {coverImageUrl !== "" && <img src={coverImageUrl} width="120" height="160" />}
+          {coverImageUrlErr !== "" && <span className="small text-danger">{coverImageUrlErr}</span>}
         </Form.Group>
         <Button type="submit">送信</Button>
       </Form>

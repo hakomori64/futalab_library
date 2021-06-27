@@ -101,11 +101,7 @@ const BookEdit: FC<BookIdProps> = (props) => {
             value={title}
             onChange={handleNameChange}
           />
-          {titleErr !== "" ? (
-            <span className="small text-danger">{titleErr}</span>
-          ) : (
-            <></>
-          )}
+          {titleErr !== "" && <span className="small text-danger">{titleErr}</span>}
         </Form.Group>
         <Form.Group>
           <Form.Label>ISBN</Form.Label>
@@ -115,11 +111,7 @@ const BookEdit: FC<BookIdProps> = (props) => {
             value={isbn}
             onChange={handleIsbnChange}
           />
-          {isbnErr !== "" ? (
-            <span className="small text-danger">{isbnErr}</span>
-          ) : (
-            <></>
-          )}
+          {isbnErr !== "" && <span className="small text-danger">{isbnErr}</span>}
         </Form.Group>
         <Form.Group>
           <Form.Label>在庫数</Form.Label>
@@ -129,11 +121,7 @@ const BookEdit: FC<BookIdProps> = (props) => {
             value={quantity}
             onChange={handleQuantityChange}
           />
-          {quantityErr !== "" ? (
-            <span className="small text-danger">{quantityErr}</span>
-          ) : (
-            <></>
-          )}
+          {quantityErr !== "" && <span className="small text-danger">{quantityErr}</span>}
         </Form.Group>
         <Button type="submit">送信</Button>
       </Form>

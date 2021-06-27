@@ -75,15 +75,13 @@ const Rentals = () => {
               <td>{new Date(rental["date"]).toLocaleDateString("ja-JP")}</td>
               <td>{rental["quantity"]}</td>
               <td>
-                {rental["type"] === "borrow" ? (
+                {rental["type"] === "borrow" && (
                   <Image
                     src={returnArrow}
                     style={{ width: "18px", cursor: "pointer" }}
                     onClick={() => handleShow(rental)}
                     rounded
                   />
-                ) : (
-                  <div></div>
                 )}
               </td>
             </tr>

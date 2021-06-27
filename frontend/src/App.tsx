@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import './App.css';
-import Header from './widgits/Header';
+import Header from './widgets/Header';
 import Home from './components/Home';
 import Books from './components/Books';
 import Rentals from './components/Rentals';
@@ -23,9 +23,9 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/books" component={Books} />
           <Route exact path="/rentals" component={Rentals} />
-          <Route exact path="/Info/:id" component={Information} />
-          <Route exact path="/Register" component={RegisteringBooks} />
-          <Route exact path="/Borrow" component={Borrowing} />
+          <Route exact path="/info/:id" component={Information} />
+          <Route exact path="/register" component={RegisteringBooks} />
+          <Route exact path="/borrow/:id" component={Borrowing} />
         </Switch>
       </Container>
     </Router>

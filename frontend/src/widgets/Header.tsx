@@ -1,7 +1,7 @@
 import { Nav, Navbar } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
-import './header.css';
+import './Header.css';
 
 const Header = () => (
     <Navbar bg="dark" expand="lg" variant="dark">

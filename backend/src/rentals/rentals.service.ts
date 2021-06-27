@@ -32,7 +32,7 @@ export class RentalsService {
         ...borrow,
       };
     })
-    return [...returns, borrows].sort((a : any, b : any) => (a.date as Date) < (b.date as Date) ? 1 : -1);
+    return [...returns, ...borrows].sort((a : any, b : any) => (a.date as Date) < (b.date as Date) ? 1 : -1);
   }
 
   findOne(id: number) {

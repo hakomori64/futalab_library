@@ -1,5 +1,6 @@
 import {
     useState,
+    useEffect,
 } from 'react';
 import {
     Table,
@@ -7,14 +8,56 @@ import {
     Button,
     Modal,
 } from 'react-bootstrap';
+import { useHistory } from 'react-router';
+import { Rental } from '../../types';
 import returnArrow from "./return_arrow.webp";
 
 
 const Rentals = () => {
+    const history = useHistory()
+
     const [show, setShow] = useState(false);
+    const [selectedRental, setSelectedRental] = useState({} as Rental);
+    const [rentals, setRentals] = useState([])
     
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => {
+        setShow(false);
+        setSelectedRental({} as Rental);
+    };
+
+    const handleShow = (rental: Rental) => {
+        setShow(true);
+        setSelectedRental(rental);
+    };
+
+    const handleConfirm = async () => {
+        console.log("returning content")
+        const res = await fetch('http://localhost:3001/api/returns', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "user_name": selectedRental.user_name,
+                "quantity": selectedRental.quantity,
+                "book_id": selectedRental.book_id
+            })
+        });
+
+        console.log("res.status " + res.status);
+
+        if (res.status === 201) {
+            history.go(0);
+        }
+    };
+
+    useEffect(() => {
+        (async () => {
+            const res = await fetch('http://localhost:3001/api/rentals');
+            setRentals(await res.json());
+        })();
+    }, []);
 
     return (
         <>
@@ -28,21 +71,24 @@ const Rentals = () => {
                         <th>Title</th>
                         <th>Date</th>
                         <th>冊数</th>
-                        <th>Action</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {[{"id":1, "name":"Hoge", "state":"返却", "title":"Hoge", "date":"2021/1/1", "num":1},
-                      {"id":2, "name":"Fuga", "state":"貸出", "title":"Fuga", "date":"2020/1/1", "num":1}].map((col_item, idx) => (
+                    {rentals.map((rental, idx) => (
                         <tr key={idx}>
-                            <th>{col_item.id}</th>
-                            <td>{col_item.name}</td>
-                            <td>{col_item.state}</td>
-                            <td>{col_item.title}</td>
-                            <td>{col_item.date}</td>
-                            <td>{col_item.num}</td>
+                            <th>{rental['id']}</th>
+                            <td>{rental['user_name']}</td>
+                            <td>{rental['type'] === 'return' ? '返却' : '貸出'}</td>
+                            <td>{rental['book']['title']}</td>
+                            <td>{(new Date(rental['date'])).toLocaleDateString("ja-JP")}</td>
+                            <td>{rental['quantity']}</td>
                             <td>
-                                <Image src={returnArrow} style={{width:"18px"}} onClick={handleShow} rounded />
+                                {
+                                    rental['type'] === 'borrow' ?
+                                        <Image src={returnArrow} style={{width:"18px", cursor: "pointer"}} onClick={() => handleShow(rental)} rounded /> :
+                                        <div></div>
+                                }
                             </td>
                         </tr>
                     ))}
@@ -56,7 +102,7 @@ const Rentals = () => {
                     <Modal.Title>Do you return the book?</Modal.Title>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="dark">
+                    <Button variant="dark" onClick={handleConfirm}>
                         Yes
                     </Button>
                     <Button variant="secondary" onClick={handleClose}>

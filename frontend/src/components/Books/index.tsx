@@ -1,3 +1,7 @@
+import {
+    useEffect,
+    useState 
+} from 'react';
 import { 
     Card,
     Table,
@@ -9,58 +13,81 @@ import {
 import {
     LinkContainer,
 } from 'react-router-bootstrap';
-import noimage from "./NoImage.svg";
+import noimage from "./../../img/NoImage.svg";
+import { Book } from '../../types';
 
-const BooksInfoTable = () => (
-    <Table borderless>
-        <tbody>
-            <tr>
-                <th>ISBN</th>
-                <td className="text-center">{"XXXXXXXXXX"}</td>
-            </tr>
-            <tr>
-                <th>残り冊数</th>
-                <td className="text-center">{12}</td>
-            </tr>
-        </tbody>
-    </Table>
-);
+interface BooksInfoTableProps {
+    isbn: string;
+    quantity: number;
+}
 
-const Books = () => (
-    <CardDeck>
-        {['Hello', 'Hi', 'How are U?', 'I\'m fine.', 'Hello', 'Hi', 'How are U?', 'I\'m fine.'].map((book_info, idx) => (
-            <Col className="container-fluid mt-4 px-0" key={idx}>
-                <Card key={idx}>
-                    <Card.Header>
-                        <Nav variant="tabs" defaultActiveKey="#info">
-                            <Nav.Item>
-                                <Nav.Link href="#info">info</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link href="#edit">edit</Nav.Link>
-                            </Nav.Item>
-                        </Nav>
-                    </Card.Header>
-                    <Card.Img variant="top" src={noimage} />
-                    <Card.Body>
-                        <Card.Title>{book_info}</Card.Title>
-                        <BooksInfoTable />
-                        <LinkContainer to={'/info/'+idx}>
-                            <Button >Show detail</Button>
-                        </LinkContainer>
-                    </Card.Body>
-                </Card>
-            </Col>
-        ))}
-    </CardDeck>
-);
-/*<ListGroup horizontal variant="flush">
-            <ListGroup.Item active>ID</ListGroup.Item>
-            <ListGroup.Item>Title</ListGroup.Item>
-            <ListGroup.Item>残り冊数</ListGroup.Item>
-            <ListGroup.Item >Info</ListGroup.Item>
-            <ListGroup.Item >+</ListGroup.Item>
-            <ListGroup.Item >-</ListGroup.Item>
-            <ListGroup.Item >remove</ListGroup.Item>
-        </ListGroup>*/
+const BooksInfoTable = ({ isbn, quantity}: BooksInfoTableProps) => {
+
+    return (
+        <Table borderless>
+            <tbody>
+                <tr>
+                    <th>ISBN</th>
+                    <td className="text-center">{isbn}</td>
+                </tr>
+                <tr>
+                    <th>残り冊数</th>
+                    <td className="text-center">{quantity}</td>
+                </tr>
+            </tbody>
+        </Table>
+    );
+};
+
+const Books = () => {
+    const [books, setBooks] = useState([] as Book[]);
+    useEffect(() => {
+        (async () => {
+            const res = await fetch('http://localhost:3001/api/books');
+            setBooks(await res.json());
+        })();
+    }, []);
+
+
+    return (
+    <>
+        <CardDeck>
+            {books.map((book_info, idx) => {
+                const borrowed_history_sum = (book_info['borrows'] ?? []).reduce((sum, borrow) => sum + borrow['quantity'], 0);
+                const returned_history_sum = (book_info['returns'] ?? []).reduce((sum, rtn) => sum + rtn['quantity'], 0);
+                return (
+                    <Col className="container-fluid mt-4 px-0" key={idx}>
+                        <Card key={idx}>
+                            <Card.Header>
+                                <Nav variant="tabs" defaultActiveKey="#info">
+                                    <Nav.Item>
+                                        <Nav.Link href="#info">情報</Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link href="#edit">更新</Nav.Link>
+                                    </Nav.Item>
+                                </Nav>
+                            </Card.Header>
+                            <Card.Img
+                                variant="top"
+                                src={book_info['cover_image_url'] !== "" ? book_info['cover_image_url'] : noimage}
+                                height="400"
+                                style={{objectFit: "contain", padding: "5px"}}
+                            />
+                            <Card.Body>
+                                <Card.Title>{book_info['title']}</Card.Title>
+                                <BooksInfoTable isbn={book_info['isbn']} quantity={book_info['quantity'] - borrowed_history_sum + returned_history_sum} />
+                                <LinkContainer to={'/info/'+book_info['id']}>
+                                    <Button >Show detail</Button>
+                                </LinkContainer>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                )
+            })}
+        </CardDeck>
+    </>
+    );
+}
+
 export default Books;

@@ -17,10 +17,10 @@ const Borrowing: FC<BookIdProps> = (props) => {
     const id = props.match.params.id;
 
     // formの値を保存する
-    const [name, setName] = useState("");
-    const [nameErr, setNameErr] = useState("");
-    const [bookNum, setBookNum] = useState(0);
-    const [bookNumErr, setBookNumErr] = useState("");
+    const [userName, setUserName] = useState("");
+    const [userNameErr, setUserNameErr] = useState("");
+    const [quantity, setQuantity] = useState(0);
+    const [quantityErr, setQuantityErr] = useState("");
 
     const history = useHistory();
 
@@ -33,38 +33,37 @@ const Borrowing: FC<BookIdProps> = (props) => {
         })()
     }, []);
 
-    // 履歴を見て過去何冊借りられたか総和を求める
-    const borrow_nums = (book.borrows ?? []).reduce((sum, borrow) => sum + borrow['quantity'], 0);
-    // 履歴を見て過去何冊返却されたか総和を求める
-    const return_nums = (book.returns ?? []).reduce((sum, rtn) => sum + rtn['quantity'], 0);
-    // 以上の変数を用いて、
-    // 最大冊数(book['quantity']) - 過去何冊借りられたか(borrow_num) + 過去何冊返却されたか(return_num)
-    // で、今研究室に何冊残っているかを求められる
-    const remain_books = book.quantity - borrow_nums + return_nums;
+    const borrowed_history_sum = (book.borrows ?? []).reduce((sum, borrow) => sum + borrow['quantity'], 0);
+    const returned_history_sum = (book.returns ?? []).reduce((sum, rtn) => sum + rtn['quantity'], 0);
+    const remain_books = book.quantity - borrowed_history_sum + returned_history_sum;
 
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setName(event.target.value)
+        console.log("handleNameChange");
+        console.log(event.target.value);
+        setUserName(event.target.value)
     }
     const handleBookNumChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setBookNum(Number(event.target.value));
+        console.log("handleBookNumChange");
+        console.log(event.target.value);
+        console.log(Number(event.target.value));
+        setQuantity(Number(event.target.value));
     }
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
-        setNameErr("");
-        setBookNumErr("");
+        console.log("user_name " + userName);
+        console.log("num " + quantity);
 
         let errorOccured = false;
-        if (bookNum <= 0) {
-            setBookNumErr("0冊以下は借りられません");
+        if (quantity <= 0) {
+            setQuantityErr("0冊以下は借りられません");
             errorOccured = true;
         }
-        if (remain_books - bookNum < 0) {
-            setBookNumErr("借りすぎです");
+        if (remain_books - quantity < 0) {
+            setQuantityErr("指定された冊数は在庫がありません。");
             errorOccured = true;
         }
-        if (name.length === 0) {
-            setNameErr("借りる人の名前を入力してください。");
+        if (userName.length === 0) {
+            setUserNameErr("借りる人の名前を入力してください。");
             errorOccured = true;
         }
 
@@ -76,8 +75,8 @@ const Borrowing: FC<BookIdProps> = (props) => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "user_name": name,
-                    "quantity": bookNum,
+                    "user_name": userName,
+                    "quantity": quantity,
                     "book_id": id
                 })
             });
@@ -99,10 +98,10 @@ const Borrowing: FC<BookIdProps> = (props) => {
                     <Form.Control
                         type="text"
                         placeholder="あなたの名前を入力してください"
-                        value={name}
+                        value={userName}
                         onChange={handleNameChange}
                     />
-                    {nameErr !== "" ? <span className="small text-danger" >{nameErr}</span> : <></>}
+                    {userNameErr !== "" ? <span className="small text-danger" >{userNameErr}</span> : <></>}
                 </Form.Group>
                 <Form.Group controlId="formBorrowBooksQuantity">
                     <Form.Label>
@@ -112,10 +111,10 @@ const Borrowing: FC<BookIdProps> = (props) => {
                         type="number"
                         placeholder="借りる本の冊数を入力してください"
                         defaultValue={1}
-                        value={bookNum}
+                        value={quantity}
                         onChange={handleBookNumChange}
                     />
-                    {bookNumErr !== "" ? <span className="small text-danger" >{bookNumErr}</span> : <></>}
+                    {quantityErr !== "" ? <span className="small text-danger" >{quantityErr}</span> : <></>}
                 </Form.Group>
                 <Button type="submit">
                     送信

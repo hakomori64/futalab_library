@@ -53,13 +53,8 @@ const Books = () => {
     <>
         <CardDeck>
             {books.map((book_info, idx) => {
-                // 履歴を見て過去何冊借りられたか総和を求める
-                const borrow_num = (book_info['borrows'] ?? []).reduce((sum, borrow) => sum + borrow['quantity'], 0);
-                // 履歴を見て過去何冊返却されたか総和を求める
-                const return_num = (book_info['returns'] ?? []).reduce((sum, rtn) => sum + rtn['quantity'], 0);
-                // 以上の変数を用いて、
-                // 最大冊数(book_info['quantity']) - 過去何冊借りられたか(borrow_num) + 過去何冊返却されたか(return_num)
-                // で、今研究室に何冊残っているかを求められる
+                const borrowed_history_sum = (book_info['borrows'] ?? []).reduce((sum, borrow) => sum + borrow['quantity'], 0);
+                const returned_history_sum = (book_info['returns'] ?? []).reduce((sum, rtn) => sum + rtn['quantity'], 0);
                 return (
                     <Col className="container-fluid mt-4 px-0" key={idx}>
                         <Card key={idx}>
@@ -81,7 +76,7 @@ const Books = () => {
                             />
                             <Card.Body>
                                 <Card.Title>{book_info['title']}</Card.Title>
-                                <BooksInfoTable isbn={book_info['isbn']} quantity={book_info['quantity'] - borrow_num + return_num} />
+                                <BooksInfoTable isbn={book_info['isbn']} quantity={book_info['quantity'] - borrowed_history_sum + returned_history_sum} />
                                 <LinkContainer to={'/info/'+book_info['id']}>
                                     <Button >Show detail</Button>
                                 </LinkContainer>

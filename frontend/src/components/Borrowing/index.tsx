@@ -33,14 +33,9 @@ const Borrowing: FC<BookIdProps> = (props) => {
         })()
     })
 
-    // 履歴を見て過去何冊借りられたか総和を求める
-    const borrow_nums = (book.borrows ?? []).reduce((sum, borrow) => sum + borrow['quantity'], 0);
-    // 履歴を見て過去何冊返却されたか総和を求める
-    const return_nums = (book.returns ?? []).reduce((sum, rtn) => sum + rtn['quantity'], 0);
-    // 以上の変数を用いて、
-    // 最大冊数(book['quantity']) - 過去何冊借りられたか(borrow_num) + 過去何冊返却されたか(return_num)
-    // で、今研究室に何冊残っているかを求められる
-    const remain_books = book.quantity - borrow_nums + return_nums;
+    const borrowed_history_sum = (book.borrows ?? []).reduce((sum, borrow) => sum + borrow['quantity'], 0);
+    const returned_history_sum = (book.returns ?? []).reduce((sum, rtn) => sum + rtn['quantity'], 0);
+    const remain_books = book.quantity - borrowed_history_sum + returned_history_sum;
 
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log("handleNameChange");

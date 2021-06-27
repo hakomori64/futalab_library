@@ -64,7 +64,7 @@ const Borrowing: FC<BookIdProps> = (props) => {
             errorOccured = true;
         }
         if (remain_books - bookNum < 0) {
-            setBookNumErr("借りすぎです");
+            setBookNumErr("指定された冊数は在庫がありません。");
             errorOccured = true;
         }
         if (name.length === 0) {

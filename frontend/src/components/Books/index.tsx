@@ -51,6 +51,11 @@ const Books = () => {
 
     return (
     <>
+        <div className="mt-3 d-flex flex-row justify-content-end">
+            <LinkContainer to={'/register'}>
+                <Button className="btn-lg" >本を登録する</Button>
+            </LinkContainer>
+        </div>
         <CardDeck>
             {books.map((book_info, idx) => {
                 // 履歴を見て過去何冊借りられたか総和を求める
@@ -63,16 +68,6 @@ const Books = () => {
                 return (
                     <Col className="container-fluid mt-4 px-0" key={idx}>
                         <Card key={idx}>
-                            <Card.Header>
-                                <Nav variant="tabs" defaultActiveKey="#info">
-                                    <Nav.Item>
-                                        <Nav.Link href="#info">情報</Nav.Link>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <Nav.Link href="#edit">更新</Nav.Link>
-                                    </Nav.Item>
-                                </Nav>
-                            </Card.Header>
                             <Card.Img
                                 variant="top"
                                 src={book_info['cover_image_url'] !== "" ? book_info['cover_image_url'] : noimage}

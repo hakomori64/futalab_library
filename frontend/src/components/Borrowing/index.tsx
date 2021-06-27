@@ -31,7 +31,7 @@ const Borrowing: FC<BookIdProps> = (props) => {
             const res = await fetch(`http://localhost:3001/api/books/` + id);
             setBook(await res.json());
         })()
-    })
+    }, []);
 
     // 履歴を見て過去何冊借りられたか総和を求める
     const borrow_nums = (book.borrows ?? []).reduce((sum, borrow) => sum + borrow['quantity'], 0);
@@ -43,20 +43,16 @@ const Borrowing: FC<BookIdProps> = (props) => {
     const remain_books = book.quantity - borrow_nums + return_nums;
 
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("handleNameChange");
-        console.log(event.target.value);
         setName(event.target.value)
     }
     const handleBookNumChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("handleBookNumChange");
-        console.log(event.target.value);
-        console.log(Number(event.target.value));
         setBookNum(Number(event.target.value));
     }
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log("user_name " + name);
-        console.log("num " + bookNum);
+
+        setNameErr("");
+        setBookNumErr("");
 
         let errorOccured = false;
         if (bookNum <= 0) {
@@ -122,7 +118,7 @@ const Borrowing: FC<BookIdProps> = (props) => {
                     {bookNumErr !== "" ? <span className="small text-danger" >{bookNumErr}</span> : <></>}
                 </Form.Group>
                 <Button type="submit">
-                    Submit
+                    送信
                 </Button>
             </Form>
         </>

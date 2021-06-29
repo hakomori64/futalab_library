@@ -7,7 +7,7 @@ type BookIdProps = RouteComponentProps<{
   id: string;
 }>;
 
-const BookEdit: FC<BookIdProps> = (props) => {
+const EditingBook: FC<BookIdProps> = (props) => {
   const id = props.match.params.id;
 
   const history = useHistory();
@@ -129,4 +129,4 @@ const BookEdit: FC<BookIdProps> = (props) => {
   );
 };
 
-export default BookEdit;
+export default EditingBook;

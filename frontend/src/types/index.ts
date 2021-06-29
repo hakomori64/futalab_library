@@ -11,6 +11,7 @@ export type Book = {
 	title: string,
 	isbn: string,
 	quantity: number,
+	remain: number,
 	cover_image_url: string,
 	borrows: Rental[],
 	returns: Rental[],

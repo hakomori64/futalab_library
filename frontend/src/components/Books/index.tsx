@@ -53,8 +53,6 @@ const Books = () => {
     <>
         <CardDeck>
             {books.map((book_info, idx) => {
-                const borrowed_history_sum = (book_info['borrows'] ?? []).reduce((sum, borrow) => sum + borrow['quantity'], 0);
-                const returned_history_sum = (book_info['returns'] ?? []).reduce((sum, rtn) => sum + rtn['quantity'], 0);
                 return (
                     <Col className="container-fluid mt-4 px-0" key={idx}>
                         <Card key={idx}>
@@ -76,7 +74,7 @@ const Books = () => {
                             />
                             <Card.Body>
                                 <Card.Title>{book_info['title']}</Card.Title>
-                                <BooksInfoTable isbn={book_info['isbn']} quantity={book_info['quantity'] - borrowed_history_sum + returned_history_sum} />
+                                <BooksInfoTable isbn={book_info['isbn']} quantity={book_info['remain']} />
                                 <LinkContainer to={'/info/'+book_info['id']}>
                                     <Button >Show detail</Button>
                                 </LinkContainer>

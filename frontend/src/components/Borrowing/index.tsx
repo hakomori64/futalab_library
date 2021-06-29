@@ -33,10 +33,6 @@ const Borrowing: FC<BookIdProps> = (props) => {
         })()
     })
 
-    const borrowed_history_sum = (book.borrows ?? []).reduce((sum, borrow) => sum + borrow['quantity'], 0);
-    const returned_history_sum = (book.returns ?? []).reduce((sum, rtn) => sum + rtn['quantity'], 0);
-    const remain_books = book.quantity - borrowed_history_sum + returned_history_sum;
-
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log("handleNameChange");
         console.log(event.target.value);
@@ -58,7 +54,7 @@ const Borrowing: FC<BookIdProps> = (props) => {
             setQuantityErr("0冊以下は借りられません");
             errorOccured = true;
         }
-        if (remain_books - quantity < 0) {
+        if (book.remain - quantity < 0) {
             setQuantityErr("指定された冊数は在庫がありません。");
             errorOccured = true;
         }

@@ -26,11 +26,6 @@ const Information: FC<BookIdProps> = (props) => {
         })();
     })
 
-    // 履歴を見て過去何冊借りられたか総和を求める
-    const borrowed_history_sum = (book.borrows ?? []).reduce((sum, borrow) => sum + borrow['quantity'], 0);
-    // 履歴を見て過去何冊返却されたか総和を求める
-    const returned_history_sum = (book.returns ?? []).reduce((sum, rtn) => sum + rtn['quantity'], 0);
-
     return (
         <>
             <h1>{book['title']}</h1>
@@ -53,7 +48,7 @@ const Information: FC<BookIdProps> = (props) => {
                     </tr>
                     <tr>
                         <th>残り冊数/最大</th>
-                        <td>{book['quantity'] - borrowed_history_sum + returned_history_sum}/{book['quantity']}</td>
+                        <td>{book.remain}/{book.quantity}</td>
                     </tr>
                     <tr>
                         <th>Last update</th>

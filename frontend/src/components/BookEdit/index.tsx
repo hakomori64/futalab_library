@@ -1,8 +1,15 @@
 import React, { FC, useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { RouteComponentProps, useHistory } from "react-router-dom";
+import { Book } from "../../types";
 
-const RegisteringBooks: FC<{}> = () => {
+type BookIdProps = RouteComponentProps<{
+  id: string;
+}>;
+
+const EditingBook: FC<BookIdProps> = (props) => {
+  const id = props.match.params.id;
+
   const history = useHistory();
 
   const [title, setTitle] = useState("");
@@ -11,8 +18,6 @@ const RegisteringBooks: FC<{}> = () => {
   const [isbnErr, setIsbnErr] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [quantityErr, setQuantityErr] = useState("");
-  const [coverImageUrl, setCoverImageUrl] = useState("");
-  const [coverImageUrlErr, setCoverImageUrlErr] = useState("");
 
   // onChange handlers
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,28 +28,8 @@ const RegisteringBooks: FC<{}> = () => {
     setIsbn(event.target.value);
   };
 
-  const handleNumberOfBooksChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuantity(Number(event.target.value));
-  };
-
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (event.target.files == null || event.target.files.length !== 1) {
-      return;
-    }
-
-    let formData = new FormData();
-    console.log(event.target.files[0]);
-    formData.append("image", event.target.files[0]);
-
-    const res = await fetch(`http://localhost:3001/api/photos`, {
-      method: "POST",
-      body: formData,
-    });
-    setCoverImageUrl((await res.json())["cover_image_url"]);
   };
 
   // handle submit
@@ -64,26 +49,15 @@ const RegisteringBooks: FC<{}> = () => {
       setIsbnErr("有効なISBNではありません");
       errorOccured = true;
     }
-    if (quantity <= 0) {
+    if (quantity < 0) {
       setQuantityErr("0以上の値を入力してください");
-      errorOccured = true;
-    }
-
-    const re = new RegExp(
-      "^https?://(?:[a-z0-9-]+.)+[a-z]{2,6}(?:/[^/#?]+)+.(?:jpg|gif|png)$"
-    );
-    if (!coverImageUrl.match(re)) {
-      console.log(coverImageUrl);
-      setCoverImageUrlErr(
-        "画像のURLに問題があるようです。アップし直してみてください。"
-      );
       errorOccured = true;
     }
 
     if (!errorOccured) {
       console.log("here");
-      const res = await fetch("http://localhost:3001/api/books/", {
-        method: "POST",
+      const res = await fetch("http://localhost:3001/api/books/" + id, {
+        method: "PUT",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -91,20 +65,33 @@ const RegisteringBooks: FC<{}> = () => {
         body: JSON.stringify({
           title: title,
           isbn: isbn,
-          cover_image_url: coverImageUrl,
           quantity: quantity,
         }),
       });
 
-      if (res.status === 201) {
-        history.replace("/books");
+      if (res.status === 200) {
+        history.replace("/info/" + id);
       }
     }
   };
 
+  // initialize book info
+  useEffect(() => {
+    (async () => {
+      const res = await fetch(`http://localhost:3001/api/books/` + id);
+      const book: Book = await res.json();
+
+      setTitle(book.title);
+      setIsbn(book.isbn);
+      setQuantity(book.quantity);
+    })();
+  }, []);
+
   return (
     <>
-      <h1 style={{ fontFamily: "Georgia, serif, sans-serif" }}>本を登録する</h1>
+      <h1 style={{ fontFamily: "Georgia, serif, sans-serif" }}>
+        本の情報を編集する
+      </h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>本の名前</Form.Label>
@@ -130,17 +117,11 @@ const RegisteringBooks: FC<{}> = () => {
           <Form.Label>在庫数</Form.Label>
           <Form.Control
             type="number"
-            placeholder="研究室で持っている本の冊数を入力してください"
+            placeholder="登録する冊数を入力してください"
             value={quantity}
-            onChange={handleNumberOfBooksChange}
+            onChange={handleQuantityChange}
           />
           {quantityErr !== "" && <span className="small text-danger">{quantityErr}</span>}
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>表紙の画像をアップロードしてください。</Form.Label>
-          <Form.File type="file" onChange={handleFileChange}></Form.File>
-          {coverImageUrl !== "" && <img src={coverImageUrl} width="120" height="160" />}
-          {coverImageUrlErr !== "" && <span className="small text-danger">{coverImageUrlErr}</span>}
         </Form.Group>
         <Button type="submit">送信</Button>
       </Form>
@@ -148,4 +129,4 @@ const RegisteringBooks: FC<{}> = () => {
   );
 };
 
-export default RegisteringBooks;
+export default EditingBook;

@@ -2,4 +2,5 @@ mysql
 frontend/node_modules
 backend/node_modules
 backend/dist
-backend/photos
+backend/photos/*
+!backend/photos/.hidden

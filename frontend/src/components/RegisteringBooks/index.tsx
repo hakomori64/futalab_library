@@ -1,16 +1,20 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
 const RegisteringBooks: FC<{}> = () => {
   const history = useHistory();
+  const imageRef = useRef(null);
 
   const [title, setTitle] = useState("");
   const [titleErr, setTitleErr] = useState("");
+
   const [isbn, setIsbn] = useState("");
   const [isbnErr, setIsbnErr] = useState("");
+
   const [quantity, setQuantity] = useState(0);
   const [quantityErr, setQuantityErr] = useState("");
+
   const [coverImageUrl, setCoverImageUrl] = useState("");
   const [coverImageUrlErr, setCoverImageUrlErr] = useState("");
 
@@ -72,7 +76,7 @@ const RegisteringBooks: FC<{}> = () => {
     const re = new RegExp(
       "^https?://(?:[a-z0-9-]+.)+[a-z]{2,6}(?:/[^/#?]+)+.(?:jpg|gif|png)$"
     );
-    if (!coverImageUrl.match(re)) {
+    if (coverImageUrl !== "" && !coverImageUrl.match(re)) {
       console.log(coverImageUrl);
       setCoverImageUrlErr(
         "画像のURLに問題があるようです。アップし直してみてください。"
@@ -138,8 +142,17 @@ const RegisteringBooks: FC<{}> = () => {
         </Form.Group>
         <Form.Group>
           <Form.Label>表紙の画像をアップロードしてください。</Form.Label>
-          <Form.File type="file" onChange={handleFileChange}></Form.File>
-          {coverImageUrl !== "" && <img src={coverImageUrl} width="120" height="160" />}
+          <Form.File key={coverImageUrl} type="file" custom>
+            <div className="position-relative" >
+              <Form.File.Input onChange={handleFileChange} className="position-absolute" style={{width: "100px"}} />
+              <Button className="position-absolute top-50 start-50">画像を選択</Button>
+            </div>
+          </Form.File>
+          {coverImageUrl !== "" &&
+            <div style={{width: "180px", height: "280px" }}>
+              <Button className="btn btn-circle button-close" onClick={() => setCoverImageUrl("")}>リセット</Button>
+              <img src={coverImageUrl} width="180px" height="240px" />
+            </div>}
           {coverImageUrlErr !== "" && <span className="small text-danger">{coverImageUrlErr}</span>}
         </Form.Group>
         <Button type="submit">送信</Button>

@@ -7,7 +7,7 @@ export class CreateBookDto {
     @ApiProperty()
     readonly isbn: string;
 
-    @ApiProperty()
+    @ApiProperty({ nullable: true })
     readonly cover_image_url: string;
 
     @ApiProperty()

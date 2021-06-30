@@ -6,7 +6,7 @@ import Home from "./components/Home";
 import Books from "./components/Books";
 import Rentals from "./components/Rentals";
 import Information from "./components/Information";
-import EditingBook from "./components/BookEdit";
+import EditingBook from "./components/EditingBook";
 import RegisteringBooks from "./components/RegisteringBooks";
 import Borrowing from "./components/Borrowing";
 

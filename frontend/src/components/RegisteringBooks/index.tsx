@@ -27,7 +27,7 @@ const RegisteringBooks: FC<{}> = () => {
     setIsbn(event.target.value);
   };
 
-  const handleNumberOfBooksChange = (
+  const handleQuantityChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setQuantity(Number(event.target.value));
@@ -58,6 +58,7 @@ const RegisteringBooks: FC<{}> = () => {
     setTitleErr("");
     setIsbnErr("");
     setQuantityErr("");
+    setCoverImageUrlErr("");
 
     let errorOccured = false;
     if (title.length === 0) {
@@ -136,7 +137,7 @@ const RegisteringBooks: FC<{}> = () => {
             type="number"
             placeholder="研究室で持っている本の冊数を入力してください"
             value={quantity}
-            onChange={handleNumberOfBooksChange}
+            onChange={handleQuantityChange}
           />
           {quantityErr !== "" && <span className="small text-danger">{quantityErr}</span>}
         </Form.Group>

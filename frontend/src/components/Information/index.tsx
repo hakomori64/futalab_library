@@ -26,6 +26,7 @@ const Information: FC<BookIdProps> = (props) => {
       <img
         src={book["cover_image_url"] !== "" ? book["cover_image_url"] : noimage}
         alt="book cover"
+        width="500px"
       />
       <div className="my-3 d-flex flex-row">
         <div className="mx-1">
@@ -42,12 +43,12 @@ const Information: FC<BookIdProps> = (props) => {
       <Table>
         <tbody>
           <tr>
-            <th>ISBN</th>
-            <td>{book["isbn"]}</td>
-          </tr>
-          <tr>
             <th>ID</th>
             <td>{book["id"]}</td>
+          </tr>
+          <tr>
+            <th>ISBN</th>
+            <td>{book["isbn"]}</td>
           </tr>
           <tr>
             <th>残り冊数/最大</th>

@@ -1,4 +1,4 @@
-import { Book } from 'src/book/entities/book.entity';
+import { Book } from '../../book/entities/book.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 
 @Entity({name: 'borrows'})

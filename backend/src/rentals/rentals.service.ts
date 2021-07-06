@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Borrow } from 'src/borrow/entities/borrow.entity';
-import { Return } from 'src/return/entities/return.entity';
+import { Borrow } from '../borrow/entities/borrow.entity';
+import { Return } from '../return/entities/return.entity';
 import { Repository } from 'typeorm';
 import { CreateRentalDto } from './dto/create-rental.dto';
 import { UpdateRentalDto } from './dto/update-rental.dto';

@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
-import { Borrow } from 'src/borrow/entities/borrow.entity';
-import { Return } from 'src/return/entities/return.entity';
+import { Borrow } from '../../borrow/entities/borrow.entity';
+import { Return } from '../../return/entities/return.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, AfterLoad } from 'typeorm';
 
 @Entity({name: 'books'})

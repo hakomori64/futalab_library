@@ -62,7 +62,7 @@ $ npm run test:cov
 
 ## docs
 
-http://localhost:3001/docs
+${SERVER_URL}/docs
 
 ## Support
 

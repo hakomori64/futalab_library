@@ -48,7 +48,7 @@ const EditingBook: FC<BookIdProps> = (props) => {
     let formData = new FormData();
     formData.append("image", event.target.files[0]);
 
-    const res = await fetch('http://localhost:3001/api/photos', {
+    const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/photos`, {
       method: "POST",
       body: formData,
     });
@@ -93,7 +93,7 @@ const EditingBook: FC<BookIdProps> = (props) => {
 
     if (!errorOccured) {
       console.log("here");
-      const res = await fetch("http://localhost:3001/api/books/" + id, {
+      const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/books/${id}`, {
         method: "PUT",
         headers: {
           Accept: "application/json",
@@ -116,7 +116,7 @@ const EditingBook: FC<BookIdProps> = (props) => {
   // initialize book info
   useEffect(() => {
     (async () => {
-      const res = await fetch(`http://localhost:3001/api/books/` + id);
+      const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/books/${id}`);
       const book: Book = await res.json();
 
       setTitle(book.title);

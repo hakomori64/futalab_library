@@ -15,7 +15,7 @@ const Information: FC<BookIdProps> = (props) => {
   const [book, setBook] = useState({} as Book);
   useEffect(() => {
     (async () => {
-      const res = await fetch(`http://localhost:3001/api/books/` + id);
+      const res = await fetch(`${process.env.REACT_API_ENDPOINT}/books/${id}`);
       setBook(await res.json());
     })();
   }, []);

@@ -23,7 +23,7 @@ const Rentals = () => {
 
   const handleConfirm = async () => {
     console.log("returning content");
-    const res = await fetch("http://localhost:3001/api/returns", {
+    const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/returns`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -45,7 +45,7 @@ const Rentals = () => {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch("http://localhost:3001/api/rentals");
+      const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/rentals`);
       setRentals(await res.json());
     })();
   }, []);

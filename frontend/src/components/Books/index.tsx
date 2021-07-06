@@ -30,7 +30,7 @@ const Books = () => {
   const [books, setBooks] = useState([] as Book[]);
   useEffect(() => {
     (async () => {
-      const res = await fetch("http://localhost:3001/api/books");
+      const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/books`);
       setBooks(await res.json());
     })();
   }, []);

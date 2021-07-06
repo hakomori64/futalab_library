@@ -22,7 +22,7 @@ const Borrowing: FC<BookIdProps> = (props) => {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(`http://localhost:3001/api/books/` + id);
+      const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/books/${id}`);
       setBook(await res.json());
     })();
   }, []);
@@ -58,7 +58,7 @@ const Borrowing: FC<BookIdProps> = (props) => {
     }
 
     if (!errorOccured) {
-      const res = await fetch("http://localhost:3001/api/borrows", {
+      const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/borrows`, {
         method: "POST",
         headers: {
           Accept: "application/json",

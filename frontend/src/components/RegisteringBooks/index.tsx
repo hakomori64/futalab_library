@@ -44,7 +44,7 @@ const RegisteringBooks: FC<{}> = () => {
     console.log(event.target.files[0]);
     formData.append("image", event.target.files[0]);
 
-    const res = await fetch(`http://localhost:3001/api/photos`, {
+    const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/photos`, {
       method: "POST",
       body: formData,
     });
@@ -87,7 +87,7 @@ const RegisteringBooks: FC<{}> = () => {
 
     if (!errorOccured) {
       console.log("here");
-      const res = await fetch("http://localhost:3001/api/books/", {
+      const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/books/`, {
         method: "POST",
         headers: {
           Accept: "application/json",

@@ -7,7 +7,7 @@ declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    logger: ['log', 'debug', 'warn', 'error']
+    logger: ['log', 'debug', 'warn', 'error'],
   });
   const configService = app.get(ConfigService);
   app.setGlobalPrefix('api');

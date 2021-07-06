@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, Logger, Put, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Logger, Put, UseInterceptors, UploadedFile, ClassSerializerInterceptor } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
@@ -23,11 +23,13 @@ export class BookController {
     return this.bookService.create(createBookDto);
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   findAll() {
     return this.bookService.findAll();
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.bookService.findOne(+id);

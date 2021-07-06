@@ -14,11 +14,17 @@ const EditingBook: FC<BookIdProps> = (props) => {
 
   const [title, setTitle] = useState("");
   const [titleErr, setTitleErr] = useState("");
+
   const [isbn, setIsbn] = useState("");
   const [isbnErr, setIsbnErr] = useState("");
+
   const [quantity, setQuantity] = useState(0);
   const [quantityErr, setQuantityErr] = useState("");
 
+  const [coverImageUrl, setCoverImageUrl] = useState("");
+  const [coverImageUrlErr, setCoverImageUrlErr] = useState("");
+
+  
   // onChange handlers
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -32,6 +38,24 @@ const EditingBook: FC<BookIdProps> = (props) => {
     setQuantity(Number(event.target.value));
   };
 
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (event.target.files == null || event.target.files.length !== 1) {
+      return;
+    }
+
+    let formData = new FormData();
+    formData.append("image", event.target.files[0]);
+
+    const res = await fetch('http://localhost:3001/api/photos', {
+      method: "POST",
+      body: formData,
+    });
+
+    setCoverImageUrl((await res.json())["cover_image_url"]);
+  }
+
   // handle submit
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,6 +63,7 @@ const EditingBook: FC<BookIdProps> = (props) => {
     setTitleErr("");
     setIsbnErr("");
     setQuantityErr("");
+    setCoverImageUrlErr("");
 
     let errorOccured = false;
     if (title.length === 0) {
@@ -54,6 +79,18 @@ const EditingBook: FC<BookIdProps> = (props) => {
       errorOccured = true;
     }
 
+    const re = new RegExp(
+      "^https?://(?:[a-z0-9-]+.)+[a-z]{2,6}(?:/[^/#?]+)+.(?:jpg|gif|png)$"
+    );
+
+    if (coverImageUrl !== "" && !coverImageUrl.match(re)) {
+      setCoverImageUrlErr(
+        "画像のURLに問題があるようです。アップし直してみてください。"
+      );
+
+      errorOccured = true;
+    }
+
     if (!errorOccured) {
       console.log("here");
       const res = await fetch("http://localhost:3001/api/books/" + id, {
@@ -66,6 +103,7 @@ const EditingBook: FC<BookIdProps> = (props) => {
           title: title,
           isbn: isbn,
           quantity: quantity,
+          cover_image_url: coverImageUrl,
         }),
       });
 
@@ -84,6 +122,7 @@ const EditingBook: FC<BookIdProps> = (props) => {
       setTitle(book.title);
       setIsbn(book.isbn);
       setQuantity(book.quantity);
+      setCoverImageUrl(book.cover_image_url);
     })();
   }, []);
 
@@ -122,6 +161,21 @@ const EditingBook: FC<BookIdProps> = (props) => {
             onChange={handleQuantityChange}
           />
           {quantityErr !== "" && <span className="small text-danger">{quantityErr}</span>}
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>表紙の画像をアップロードしてください。</Form.Label>
+          <Form.File key={coverImageUrl} type="file" custom>
+            <div className="position-relative" >
+              <Form.File.Input onChange={handleFileChange} className="position-absolute" style={{width: "100px"}} />
+              <Button className="position-absolute top-50 start-50">画像を選択</Button>
+            </div>
+          </Form.File>
+          {coverImageUrl !== "" &&
+            <div style={{width: "180px", height: "280px" }}>
+              <Button className="btn btn-circle button-close" onClick={() => setCoverImageUrl("")}>リセット</Button>
+              <img src={coverImageUrl} width="180px" height="240px" />
+            </div>}
+          {coverImageUrlErr !== "" && <span className="small text-danger">{coverImageUrlErr}</span>}
         </Form.Group>
         <Button type="submit">送信</Button>
       </Form>

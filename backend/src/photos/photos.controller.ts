@@ -20,7 +20,7 @@ export class PhotosController {
   @UseInterceptors(FileInterceptor('image', {
     storage: diskStorage({
       destination: (req, file, cb) => {
-        cb(null, './photos')
+        cb(null, './images/thumbnails')
       },
       filename: (req, file, cb) => {
         console.log(file);
@@ -32,12 +32,12 @@ export class PhotosController {
   uploadCoverImage(@UploadedFile() file: Express.Multer.File) {
     this.logger.log(file);
     return {
-      'cover_image_url': `${this.configService.get("SERVER_URL")}${this.configService.get("SERVER_PREFIX")}${file.path}`
+      'cover_image_url': `${this.configService.get("SERVER_URL")}${this.configService.get("SERVER_PREFIX")}photos/${file.filename}`
     };
   }
 
   @Get(':imgpath')
   seeUploadedFile(@Param('imgpath') image, @Res() res) {
-    return res.sendFile(image, { root: './photos' });
+    return res.sendFile(image, { root: './images/thumbnails' });
   }
 }

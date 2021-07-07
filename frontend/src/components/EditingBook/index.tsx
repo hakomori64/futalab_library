@@ -79,6 +79,7 @@ const EditingBook: FC<BookIdProps> = (props) => {
       errorOccured = true;
     }
 
+    /*
     const re = new RegExp(
       "^https?://(?:[a-z0-9-]+.)+[a-z]{2,6}(?:/[^/#?]+)+.(?:jpg|gif|png)$"
     );
@@ -89,7 +90,7 @@ const EditingBook: FC<BookIdProps> = (props) => {
       );
 
       errorOccured = true;
-    }
+    }*/
 
     if (!errorOccured) {
       console.log("here");

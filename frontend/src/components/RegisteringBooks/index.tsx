@@ -74,6 +74,7 @@ const RegisteringBooks: FC<{}> = () => {
       errorOccured = true;
     }
 
+    /*
     const re = new RegExp(
       "^https?://(?:[a-z0-9-]+.)+[a-z]{2,6}(?:/[^/#?]+)+.(?:jpg|gif|png)$"
     );
@@ -83,7 +84,7 @@ const RegisteringBooks: FC<{}> = () => {
         "画像のURLに問題があるようです。アップし直してみてください。"
       );
       errorOccured = true;
-    }
+    }*/
 
     if (!errorOccured) {
       console.log("here");

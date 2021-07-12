@@ -4,5 +4,5 @@ backend/.env
 frontend/node_modules
 backend/node_modules
 backend/dist
-backend/images/*
-!backend/images/.hidden
+backend/images/thumbnails/*
+!backend/images/thumbnails/.hidden

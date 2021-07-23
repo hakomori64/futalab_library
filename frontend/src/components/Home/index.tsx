@@ -1,9 +1,7 @@
-import { Link } from "react-router-dom";
-
-const Home = () => (
-  <div>
-    <h1>Welcome !!</h1>
-  </div>
-);
+const Home = () => {
+    return (
+        <div>Hello This is your home page</div>
+    );
+};
 
 export default Home;

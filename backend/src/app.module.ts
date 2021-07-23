@@ -9,6 +9,8 @@ import { MulterModule } from '@nestjs/platform-express';
 import { ReturnModule } from './return/return.module';
 import { PhotosModule } from './photos/photos.module';
 import { RentalsModule } from './rentals/rentals.module';
+import { UsersModule } from './users/users.module';
+import { GroupsModule } from './groups/groups.module';
 
 @Module({
   imports: [
@@ -38,6 +40,8 @@ import { RentalsModule } from './rentals/rentals.module';
     ReturnModule,
     PhotosModule,
     RentalsModule,
+    UsersModule,
+    GroupsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

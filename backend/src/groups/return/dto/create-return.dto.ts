@@ -9,4 +9,7 @@ export class CreateReturnDto {
 
     @ApiProperty()
     readonly book_id: number;
+
+    @ApiProperty()
+    readonly group_id: number;
 }

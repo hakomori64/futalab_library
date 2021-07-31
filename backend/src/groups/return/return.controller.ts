@@ -3,7 +3,7 @@ import { ReturnService } from './return.service';
 import { CreateReturnDto } from './dto/create-return.dto';
 import { UpdateReturnDto } from './dto/update-return.dto';
 
-@Controller('returns')
+@Controller()
 export class ReturnController {
   private readonly logger = new Logger(ReturnController.name);
   

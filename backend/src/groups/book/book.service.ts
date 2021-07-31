@@ -17,12 +17,12 @@ export class BookService {
     return this.bookRepository.save(createBookDto);
   }
 
-  findAll() {
-    return this.bookRepository.find({ relations: ["borrows", "returns"] });
+  findAll(group_id: number) {
+    return this.bookRepository.find({ where: { group_id: group_id }, relations: ["borrows", "returns"] });
   }
 
-  findOne(id: number) {
-    return this.bookRepository.findOne(id, { relations: ["borrows", "returns"] });
+  findOne(group_id: number, id: number) {
+    return this.bookRepository.findOne(id, { where: { group_id: group_id }, relations: ["borrows", "returns"] });
   }
 
   update(id: number, updateBookDto: UpdateBookDto) {

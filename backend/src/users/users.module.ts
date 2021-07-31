@@ -14,7 +14,7 @@ import { User } from './entities/user.entity';
 })
 export class UsersModule implements NestModule {
   configure(consumer: MiddlewareConsumer): MiddlewareConsumer | void {
-    consumer.apply(AuthenticationMiddleware)
-            .forRoutes(UsersController)
+    // consumer.apply(AuthenticationMiddleware)
+    //         .forRoutes(UsersController)
   }
 }

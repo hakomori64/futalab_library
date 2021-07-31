@@ -12,4 +12,7 @@ export class CreateBookDto {
 
     @ApiProperty()
     readonly quantity: number;
+
+    @ApiProperty()
+    readonly group_id: number;
 }

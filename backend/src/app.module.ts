@@ -3,12 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { BookModule } from './book/book.module';
-import { BorrowModule } from './borrow/borrow.module';
+import { BookModule } from './groups/book/book.module';
+import { BorrowModule } from './groups/borrow/borrow.module';
 import { MulterModule } from '@nestjs/platform-express';
-import { ReturnModule } from './return/return.module';
+import { ReturnModule } from './groups/return/return.module';
 import { PhotosModule } from './photos/photos.module';
-import { RentalsModule } from './rentals/rentals.module';
+import { RentalsModule } from './groups/rentals/rentals.module';
 import { UsersModule } from './users/users.module';
 import { GroupsModule } from './groups/groups.module';
 

@@ -1,5 +1,6 @@
 import { Book } from '../../book/entities/book.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Group } from 'src/groups/entities/group.entity';
 
 @Entity({name: 'borrows'})
 export class Borrow {
@@ -18,6 +19,12 @@ export class Borrow {
         referencedColumnName: 'id'
     })
     book: Book;
+
+    @Column()
+    group_id: number;
+
+    @ManyToOne((type) => Group, (group: Group) => group.borrows)
+    group: Group;
 
     @Column()
     quantity: number;

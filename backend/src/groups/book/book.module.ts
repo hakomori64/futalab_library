@@ -14,7 +14,7 @@ import { AuthenticationMiddleware } from 'src/common/middleware/authentication.m
 })
 export class BookModule implements NestModule {
   configure(consumer: MiddlewareConsumer): MiddlewareConsumer | void {
-    consumer.apply(AuthenticationMiddleware)
-            .forRoutes(BookController)
+    // consumer.apply(AuthenticationMiddleware)
+    //         .forRoutes(BookController)
   }
 }

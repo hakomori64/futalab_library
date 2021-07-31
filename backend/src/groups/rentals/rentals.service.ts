@@ -19,14 +19,14 @@ export class RentalsService {
     return 'This action adds a new rental';
   }
 
-  async findAll() {
-    const returns = (await this.returnRepository.find({ relations: ["book"] })).map(rtn => {
+  async findAll(group_id: number) {
+    const returns = (await this.returnRepository.find({ where: { group_id: group_id }, relations: ["book"] })).map(rtn => {
       return {
         "type": "return",
         ...rtn,
       };
     })
-    const borrows = (await this.borrowRepository.find({ relations: ["book"]})).map(borrow => {
+    const borrows = (await this.borrowRepository.find({ where: {group_id: group_id}, relations: ["book"]})).map(borrow => {
       return {
         "type": "borrow",
         ...borrow,

@@ -9,4 +9,7 @@ export class CreateBorrowDto {
 
     @ApiProperty()
     readonly book_id: number;
+
+    @ApiProperty()
+    readonly group_id: number;
 }

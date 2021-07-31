@@ -4,7 +4,7 @@ import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 
-@Controller('books')
+@Controller()
 export class BookController {
   private readonly logger = new Logger(BookController.name);
 
@@ -19,14 +19,14 @@ export class BookController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
-  findAll() {
-    return this.bookService.findAll();
+  findAll(@Param('groupId') group_id: string) {
+    return this.bookService.findAll(+group_id);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.bookService.findOne(+id);
+  findOne(@Param('groupId') group_id: string, @Param('id') id: string) {
+    return this.bookService.findOne(+group_id, +id);
   }
 
   @Put(':id/increment')

@@ -3,7 +3,7 @@ import { BorrowService } from './borrow.service';
 import { CreateBorrowDto } from './dto/create-borrow.dto';
 import { UpdateBorrowDto } from './dto/update-borrow.dto';
 
-@Controller('borrows')
+@Controller()
 export class BorrowController {
   private readonly logger = new Logger(BorrowController.name);
 

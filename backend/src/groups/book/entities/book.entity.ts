@@ -1,7 +1,8 @@
 import { Expose } from 'class-transformer';
 import { Borrow } from '../../borrow/entities/borrow.entity';
 import { Return } from '../../return/entities/return.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, AfterLoad } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, AfterLoad, ManyToOne, JoinColumn } from 'typeorm';
+import { Group } from 'src/groups/entities/group.entity';
 
 @Entity({name: 'books'})
 export class Book {
@@ -33,4 +34,14 @@ export class Book {
 
     @OneToMany((type) => Return, (rtn: Return) => rtn.book)
     returns: Return[];
+
+    @Column()
+    group_id: number;
+
+    @ManyToOne(type => Group, (group) => group.books)
+    @JoinColumn({
+        name: 'group_id',
+        referencedColumnName: 'id'
+    })
+    group: Group;
 }

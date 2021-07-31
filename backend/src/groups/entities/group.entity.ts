@@ -1,5 +1,8 @@
 import { User } from "src/users/entities/user.entity";
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Book } from "../book/entities/book.entity";
+import { Borrow } from "../borrow/entities/borrow.entity";
+import { Return } from "../return/entities/return.entity";
 
 @Entity({name: 'groups'})
 export class Group {
@@ -14,4 +17,13 @@ export class Group {
 
     @ManyToMany((type) => User, user => user.groups)
     users: User[];
+
+    @OneToMany((type) => Book, (book: Book) => book.group)
+    books: Book[];
+
+    @OneToMany((type) => Return, (rtn: Return) => rtn.group)
+    returns: Return[];
+
+    @OneToMany((type) => Borrow, (borrow: Borrow) => borrow.group)
+    borrows: Borrow[];
 }

@@ -14,7 +14,7 @@ import { AuthenticationMiddleware } from 'src/common/middleware/authentication.m
 })
 export class ReturnModule implements NestModule {
   configure(consumer: MiddlewareConsumer): MiddlewareConsumer | void {
-    consumer.apply(AuthenticationMiddleware)
-            .forRoutes(ReturnController)
+    // consumer.apply(AuthenticationMiddleware)
+    //         .forRoutes(ReturnController)
   }
 }

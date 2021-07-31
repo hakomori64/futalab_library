@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Container } from "react-bootstrap";
+import { useAuth0 } from '@auth0/auth0-react';
 import "./App.css";
 
 import { ProtectedRoute } from './widgets/Routes';
@@ -14,10 +15,34 @@ import Information from "./components/Information";
 import EditingBook from "./components/EditingBook";
 import RegisteringBooks from "./components/RegisteringBooks";
 import Borrowing from "./components/Borrowing";
+import { useEffect } from "react";
 
 const withHeader = (Component: any) => (<><Header /><Container><Component /></Container></>);
 
 function App() {
+  const { user, getAccessTokenSilently } = useAuth0();
+  const signup = user ? user!['https://example.com/signup'] ?? false : false;
+
+  useEffect(() => {
+    (async () => {
+      if (signup) {
+        // register user information
+        console.log('register user info');
+        const token = await getAccessTokenSilently({
+          audience: process.env.REACT_APP_API_ENDPOINT
+        });
+
+        const api_endpoint = `${process.env.REACT_APP_API_ENDPOINT}/users`;
+        const result = fetch(api_endpoint, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+      }
+    })()
+  }, [signup])
+
   return (
     <Router>
       <Switch>

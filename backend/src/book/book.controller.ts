@@ -3,11 +3,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
-import { SetBookDto } from './dto/set-book.dto';
-import { Book } from './entities/book.entity';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
-import { ConfigService } from '@nestjs/config';
 
 @Controller('books')
 export class BookController {
@@ -15,7 +10,6 @@ export class BookController {
 
   constructor(
     private readonly bookService: BookService,
-    private readonly configService: ConfigService,
   ) {}
 
   @Post()

@@ -50,8 +50,4 @@ export class BookService {
   async remove(id: number): Promise<void> {
     await this.bookRepository.delete(id);
   }
-
-  async setPhoto(id: number, photo_url: string) {
-    await this.bookRepository.save({ id: id, photo_url: photo_url });
-  }
 }

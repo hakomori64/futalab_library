@@ -10,6 +10,8 @@ export class UsersController {
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
+    this.logger.debug(createUserDto.email);
+    this.logger.debug(createUserDto.name);
     return this.usersService.create(createUserDto);
   }
 

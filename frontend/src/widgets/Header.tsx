@@ -2,12 +2,10 @@ import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import LogoutButton from 'components/Logout/LogoutButton';
-
 import "./Header.css";
 
 const Header = () => {
-  const { isAuthenticated, logout } = useAuth0();
+  const { isAuthenticated, logout, loginWithRedirect } = useAuth0();
 
   return (
     <Navbar bg="dark" expand="lg" variant="dark">
@@ -41,7 +39,7 @@ const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav-not-logged-in">
           <Nav className="mr-auto"></Nav>
           <Nav>
-            <Nav.Link href="/login">ログイン</Nav.Link>
+            <Nav.Link onClick={() => loginWithRedirect()}>ログイン</Nav.Link>
           </Nav>
         </Navbar.Collapse>
         </>

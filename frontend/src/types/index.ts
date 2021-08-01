@@ -16,3 +16,14 @@ export type Book = {
 	borrows: Rental[],
 	returns: Rental[],
 }
+
+export type Group = {
+	id: number,
+	str_id: string,
+	name: string,
+	users: User[]
+}
+
+export type User = {
+	
+}

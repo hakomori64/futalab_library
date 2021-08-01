@@ -91,7 +91,7 @@ const RegisteringBooks: FC<{}> = () => {
       const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/books/`, {
         method: "POST",
         headers: {
-          Accept: "application/json",
+          "Accept": "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({

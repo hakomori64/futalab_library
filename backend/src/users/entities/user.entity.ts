@@ -1,5 +1,5 @@
 import { Group } from "src/groups/entities/group.entity";
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name: 'users'})
 export class User {
@@ -7,6 +7,7 @@ export class User {
     id: number;
 
     @Column({ length: 1024 })
+    @Index({ unique: true })
     email: string;
 
     @Column({ nullable: true, type: 'varchar', length: 1024 })

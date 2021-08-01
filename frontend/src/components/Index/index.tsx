@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import LoginButton from 'components/Login/LoginButton';
 
 const Index = () => (
   <div>

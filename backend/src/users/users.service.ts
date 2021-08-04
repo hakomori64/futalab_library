@@ -25,6 +25,10 @@ export class UsersService {
     return this.userRepository.findOne(id, { relations: ["groups"] })
   }
 
+  findBy(condition: {}) {
+    return this.userRepository.findOne(condition);
+  } 
+
   update(id: number, updateUserDto: UpdateUserDto) {
     return this.userRepository.save({ ...updateUserDto, id: Number(id) })
   }

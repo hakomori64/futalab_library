@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
+import { AuthGuard } from '@nestjs/passport';
 
 declare const module: any;
 
@@ -11,6 +12,7 @@ async function bootstrap() {
   });
   const configService = app.get(ConfigService);
   app.setGlobalPrefix('api');
+  app.useGlobalGuards(new (AuthGuard('jwt')))
   
   const config = new DocumentBuilder()
     .setTitle('API Docs')

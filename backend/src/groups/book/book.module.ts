@@ -3,7 +3,6 @@ import { BookService } from './book.service';
 import { BookController } from './book.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Book } from './entities/book.entity'
-import { AuthenticationMiddleware } from 'src/common/middleware/authentication.middleware';
 
 @Module({
   imports: [
@@ -12,9 +11,4 @@ import { AuthenticationMiddleware } from 'src/common/middleware/authentication.m
   controllers: [BookController,],
   providers: [BookService]
 })
-export class BookModule implements NestModule {
-  configure(consumer: MiddlewareConsumer): MiddlewareConsumer | void {
-    // consumer.apply(AuthenticationMiddleware)
-    //         .forRoutes(BookController)
-  }
-}
+export class BookModule { }

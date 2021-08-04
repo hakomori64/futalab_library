@@ -10,6 +10,10 @@ export class User {
     @Index({ unique: true })
     email: string;
 
+    @Column({ length: 1024 })
+    @Index({ unique: true })
+    sub: string;
+
     @Column({ nullable: true, type: 'varchar', length: 1024 })
     name: string | null;
 

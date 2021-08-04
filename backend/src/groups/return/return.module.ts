@@ -3,7 +3,6 @@ import { ReturnService } from './return.service';
 import { ReturnController } from './return.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Return } from './entities/return.entity';
-import { AuthenticationMiddleware } from 'src/common/middleware/authentication.middleware';
 
 @Module({
   imports: [
@@ -12,9 +11,4 @@ import { AuthenticationMiddleware } from 'src/common/middleware/authentication.m
   controllers: [ReturnController],
   providers: [ReturnService]
 })
-export class ReturnModule implements NestModule {
-  configure(consumer: MiddlewareConsumer): MiddlewareConsumer | void {
-    // consumer.apply(AuthenticationMiddleware)
-    //         .forRoutes(ReturnController)
-  }
-}
+export class ReturnModule {}

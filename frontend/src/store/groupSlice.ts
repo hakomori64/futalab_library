@@ -9,7 +9,8 @@ export const groupSlice = createSlice({
     initialState: {
         loading: false,
         error: null,
-        groups: [] as Group[]
+        groups: [] as Group[],
+        selectedGroupId: null
     },
     reducers: {
         fetchStart(state) {
@@ -23,7 +24,8 @@ export const groupSlice = createSlice({
         fetchSuccess(state, action) {
             state.loading = false;
             state.error = null;
-            state.groups = action.payload
+            state.groups = action.payload.groups;
+            state.selectedGroupId = action.payload.selectedGroupId;
         }
     }
 });
@@ -32,10 +34,35 @@ export const {
     fetchStart, fetchFailure, fetchSuccess, // get groups
 } = groupSlice.actions;
 
+const _setGroups = async () => {
+    const groups = await getGroups();
+    const ids = groups.map((group) => group.id);
+    const selectedGroupId = localStorage.getItem('selectedGroupId');
+    if (selectedGroupId != null && ids.includes(+selectedGroupId)) {
+        return {
+            groups: groups,
+            selectedGroupId: +selectedGroupId
+        }
+    }
+
+    if (groups.length > 0) {
+        localStorage.setItem('selectedGroupId', groups[0].id.toString());
+        return {
+            groups: groups,
+            selectedGroupId: groups[0].id
+        }
+    }
+
+    return {
+        groups: [],
+        selectedGroupId: null
+    };
+};
+
 export const fetchGroups = () => async (dispatch: AppDispatch) => {
     try {
         dispatch(fetchStart());
-        dispatch(fetchSuccess(await getGroups()));
+        dispatch(fetchSuccess(await _setGroups()));
     } catch (error) {
         dispatch(fetchFailure(error));
     }

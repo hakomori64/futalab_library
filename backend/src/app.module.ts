@@ -11,6 +11,7 @@ import { PhotosModule } from './photos/photos.module';
 import { RentalsModule } from './groups/rentals/rentals.module';
 import { UsersModule } from './users/users.module';
 import { GroupsModule } from './groups/groups.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { GroupsModule } from './groups/groups.module';
     RentalsModule,
     UsersModule,
     GroupsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

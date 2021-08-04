@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Logger, UseInterceptors, ClassSerializerInterceptor, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Logger, UseInterceptors, ClassSerializerInterceptor, Put, Request } from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
@@ -16,7 +16,9 @@ export class GroupsController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
-  findAll() {
+  findAll(@Request() req) {
+    console.log('user');
+    console.log(req.user);
     return this.groupsService.findAll();
   }
 

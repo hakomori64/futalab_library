@@ -5,15 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectGroup, fetchGroups } from '../../store/groupSlice';
 
 const Home = () => {
-  const { user, getAccessTokenSilently } = useAuth0();
+  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const signup = user ? user!['https://example.com/signup'] ?? false : false;
 
   const dispatch = useDispatch();
   const { loading, error, groups } = useSelector(selectGroup);
-
-  useEffect(() => {
-    dispatch(fetchGroups());
-  }, [dispatch]);
   
   useEffect(() => {
     (async () => {
@@ -27,10 +23,10 @@ const Home = () => {
         });
 
         const api_endpoint = `${process.env.REACT_APP_API_ENDPOINT}/users`;
-        if (user!.email === null) return;
+        if (user!.email === null || user!.sub == null) return;
         const email: string = user!.email! as string;
 
-        //TODO(hakomori64): すでに登録されていればなにもしない
+        //TODO(hakomori64): すでに登録されていればなにもしない 現在、500エラーが起きてなにもしないって感じになってる
         const result = await fetch(api_endpoint, {
           method: 'POST',
           headers: {
@@ -40,7 +36,8 @@ const Home = () => {
           },
           body: JSON.stringify({
             email: email,
-            name: user!.name || user!.nickname || 'ゲスト'
+            name: user!.name || user!.nickname || 'ゲスト',
+            sub: user!.sub
           })
         })
         console.log('fetch complete');

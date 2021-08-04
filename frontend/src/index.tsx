@@ -1,9 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { Provider } from "react-redux";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { store } from './store';
 
 ReactDOM.render(
   <Auth0Provider
@@ -13,7 +15,9 @@ ReactDOM.render(
     audience={process.env.REACT_APP_API_ENDPOINT}
   >
     <React.StrictMode>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </React.StrictMode>
   </Auth0Provider>,
   document.getElementById("root")

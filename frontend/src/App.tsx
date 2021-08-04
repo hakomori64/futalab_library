@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { useEffect } from "react";
-import { Provider } from "react-redux";
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 import "./App.css";
@@ -19,11 +18,16 @@ import RegisteringBooks from "./components/RegisteringBooks";
 import Borrowing from "./components/Borrowing";
 
 import { store } from './store';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectGroup, fetchGroups } from './store/groupSlice';
 
 const withHeader = (Component: any) => (<><Header /><Container><Component /></Container></>);
 
 function App() {
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     (async () => {
       if (isAuthenticated) {
@@ -35,24 +39,23 @@ function App() {
           }
           return requestConfig;
         });
+        dispatch(fetchGroups());
       }
     })()
-  }, [isAuthenticated]);
+  }, [isAuthenticated, dispatch]);
   return (
-    <Provider store={store}>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={() => withHeader(Index)} />
-          <ProtectedRoute exact path="/home" component={() => withHeader(Home)} />
-          <ProtectedRoute exact path="/books" component={() => withHeader(Books)} />
-          <ProtectedRoute exact path="/rentals" component={() => withHeader(Rentals)} />
-          <ProtectedRoute exact path="/info/:id" component={() => withHeader(Information)} />
-          <ProtectedRoute exact path="/edit/:id" component={() => withHeader(EditingBook)} />
-          <ProtectedRoute exact path="/register" component={() => withHeader(RegisteringBooks)} />
-          <ProtectedRoute exact path="/borrow/:id" component={() => withHeader(Borrowing)} />
-        </Switch>
-      </Router>
-    </Provider>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={() => withHeader(Index)} />
+        <ProtectedRoute exact path="/home" component={() => withHeader(Home)} />
+        <ProtectedRoute exact path="/books" component={() => withHeader(Books)} />
+        <ProtectedRoute exact path="/rentals" component={() => withHeader(Rentals)} />
+        <ProtectedRoute exact path="/info/:id" component={() => withHeader(Information)} />
+        <ProtectedRoute exact path="/edit/:id" component={() => withHeader(EditingBook)} />
+        <ProtectedRoute exact path="/register" component={() => withHeader(RegisteringBooks)} />
+        <ProtectedRoute exact path="/borrow/:id" component={() => withHeader(Borrowing)} />
+      </Switch>
+    </Router>
   );
 }
 

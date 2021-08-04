@@ -28,12 +28,13 @@ export const groupSlice = createSlice({
     }
 });
 
-export const { fetchStart, fetchFailure, fetchSuccess } = groupSlice.actions;
+export const {
+    fetchStart, fetchFailure, fetchSuccess, // get groups
+} = groupSlice.actions;
 
 export const fetchGroups = () => async (dispatch: AppDispatch) => {
     try {
         dispatch(fetchStart());
-        //TODO(hakomori64): fetch groups
         dispatch(fetchSuccess(await getGroups()));
     } catch (error) {
         dispatch(fetchFailure(error));

@@ -8,8 +8,6 @@ export class AppController {
 
   @Get()
   getHello(@Request() req): string {
-    console.log('user');
-    console.log(req.user)
     this.logger.debug("returning hello");
     return this.appService.getHello();
   }

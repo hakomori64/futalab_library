@@ -12,8 +12,7 @@ async function bootstrap() {
   });
   const configService = app.get(ConfigService);
   app.setGlobalPrefix('api');
-  app.useGlobalGuards(new (AuthGuard('jwt')))
-  
+
   const config = new DocumentBuilder()
     .setTitle('API Docs')
     .setDescription('This Doc shows how to use this api')

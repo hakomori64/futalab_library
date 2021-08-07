@@ -4,6 +4,7 @@ import { RentalsModule } from './rentals/rentals.module';
 import { BookModule } from './book/book.module';
 import { ReturnModule } from './return/return.module';
 import { BorrowModule } from './borrow/borrow.module';
+import { GroupUsersModule } from './users/users.module';
 
 export const route: Routes = [
     {
@@ -25,6 +26,10 @@ export const route: Routes = [
             {
                 path: ':groupId/rentals',
                 module: RentalsModule
+            },
+            {
+                path: ':groupId/users',
+                module: GroupUsersModule
             }
         ]
     }

@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Body, Param, Delete, Logger, Put, UseInterceptors, UploadedFile, ClassSerializerInterceptor } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Logger, Put, UseInterceptors, UploadedFile, ClassSerializerInterceptor, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 
 @Controller()
+@UseGuards(AuthGuard('jwt'))
 export class BookController {
   private readonly logger = new Logger(BookController.name);
 

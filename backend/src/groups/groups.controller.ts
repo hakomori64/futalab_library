@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Logger, UseInterceptors, ClassSerializerInterceptor, Put, Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Logger, UseInterceptors, ClassSerializerInterceptor, Put, Request, UseGuards } from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('groups')
+@UseGuards(AuthGuard('jwt'))
 export class GroupsController {
   private readonly logger = new Logger(GroupsController.name);
 
@@ -14,20 +16,19 @@ export class GroupsController {
     return this.groupsService.create(createGroupDto);
   }
 
+  
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   findAll(@Request() req) {
-    console.log('user');
-    console.log(req.user);
-    return this.groupsService.findAll();
+    return this.groupsService.findAllByUser(req.user);
   }
-
+  
   @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.groupsService.findOne(+id);
+  findOne(@Request() req, @Param('id') id: string) {
+    return this.groupsService.findOneByUser(+id, req.user);
   }
-
+  
   @Put(':id')
   update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
     return this.groupsService.update(+id, updateGroupDto);

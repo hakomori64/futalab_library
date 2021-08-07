@@ -28,20 +28,13 @@ const Borrowing: FC<BookIdProps> = (props) => {
   }, []);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("handleNameChange");
-    console.log(event.target.value);
     setUserName(event.target.value);
   };
   const handleBookNumChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("handleBookNumChange");
-    console.log(event.target.value);
-    console.log(Number(event.target.value));
     setQuantity(Number(event.target.value));
   };
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("user_name " + userName);
-    console.log("num " + quantity);
 
     let errorOccured = false;
     if (quantity <= 0) {

@@ -1,14 +1,23 @@
 import React, { FC, useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { RouteComponentProps, useHistory } from "react-router-dom";
-import { Book } from "../../types";
+import { useDispatch, useSelector } from "react-redux";
+import { RouteComponentProps, useHistory, useParams } from "react-router-dom";
+import { fetchBooks, selectBook } from "store/bookSlice";
+import { selectGroup } from "store/groupSlice";
+import { Book } from "../../../types";
+import { uploadPhoto } from '../../../repositories/photoRepository';
+import { updateBook } from "repositories/bookRepository";
 
-type BookIdProps = RouteComponentProps<{
-  id: string;
-}>;
+type BookEditParams = {
+  id: string
+};
 
-const EditingBook: FC<BookIdProps> = (props) => {
-  const id = props.match.params.id;
+const BookEdit = () => {
+
+  const dispatch = useDispatch();
+  const { loading, books } = useSelector(selectBook);
+  const { selectedGroupId } = useSelector(selectGroup);
+  const { id } = useParams<BookEditParams>();
 
   const history = useHistory();
 
@@ -23,6 +32,8 @@ const EditingBook: FC<BookIdProps> = (props) => {
 
   const [coverImageUrl, setCoverImageUrl] = useState("");
   const [coverImageUrlErr, setCoverImageUrlErr] = useState("");
+
+  const [error, setError] = useState('');
 
   
   // onChange handlers
@@ -41,19 +52,22 @@ const EditingBook: FC<BookIdProps> = (props) => {
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
+    console.log('handleFileChange called');
     if (event.target.files == null || event.target.files.length !== 1) {
       return;
     }
 
+    console.log('sending file to server');
+
     let formData = new FormData();
     formData.append("image", event.target.files[0]);
 
-    const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/photos`, {
-      method: "POST",
-      body: formData,
-    });
-
-    setCoverImageUrl((await res.json())["cover_image_url"]);
+    try {
+      const data = await uploadPhoto(formData);
+      setCoverImageUrl(data['cover_image_url']);
+    } catch (err) {
+      setCoverImageUrlErr('画像の選択に失敗しました。');
+    }
   }
 
   // handle submit
@@ -93,39 +107,40 @@ const EditingBook: FC<BookIdProps> = (props) => {
     }*/
 
     if (!errorOccured) {
-      console.log("here");
-      const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/books/${id}`, {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      try {
+        await updateBook(selectedGroupId!, +id, {
           title: title,
           isbn: isbn,
           quantity: quantity,
           cover_image_url: coverImageUrl,
-        }),
-      });
-
-      if (res.status === 200) {
-        history.replace("/info/" + id);
+        });
+        dispatch(fetchBooks(selectedGroupId!));
+        history.replace("/books/" + id);
+      } catch (error) {
+        setError(error.toString());
       }
     }
   };
 
+  const book = books.find((book) => book.id === +id);
+
   // initialize book info
   useEffect(() => {
     (async () => {
-      const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/books/${id}`);
-      const book: Book = await res.json();
+      if (selectedGroupId != null) {
+        dispatch(fetchBooks(selectedGroupId));
+      }
+    })();
+  }, [dispatch, selectedGroupId]);
 
+  useEffect(() => {
+    if (book !== undefined) {
       setTitle(book.title);
       setIsbn(book.isbn);
       setQuantity(book.quantity);
       setCoverImageUrl(book.cover_image_url);
-    })();
-  }, []);
+    }
+  }, [book]);
 
   return (
     <>
@@ -180,8 +195,9 @@ const EditingBook: FC<BookIdProps> = (props) => {
         </Form.Group>
         <Button type="submit">送信</Button>
       </Form>
+      {(error) && error}
     </>
   );
 };
 
-export default EditingBook;
+export default BookEdit;

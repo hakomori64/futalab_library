@@ -3,6 +3,9 @@ import { Card, Table, Nav, Button, CardDeck, Col } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import noimage from "./../../img/NoImage.svg";
 import { Book } from "../../types";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBooks, selectBook } from "store/bookSlice";
+import { selectGroup } from "store/groupSlice";
 
 interface BooksInfoTableProps {
   isbn: string;
@@ -27,13 +30,21 @@ const BooksInfoTable = ({ isbn, quantity }: BooksInfoTableProps) => {
 };
 
 const Books = () => {
-  const [books, setBooks] = useState([] as Book[]);
+  const dispatch = useDispatch();
+  const { selectedGroupId } = useSelector(selectGroup)
+  const { loading, error, books } = useSelector(selectBook);
+
   useEffect(() => {
     (async () => {
-      const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/books`);
-      setBooks(await res.json());
+      if (selectedGroupId != null) {
+        dispatch(fetchBooks(selectedGroupId));
+      }
     })();
-  }, []);
+  }, [dispatch, selectedGroupId]);
+
+  if (loading) {
+    return (<div>loaidng</div>);
+  }
 
   return (
     <>
@@ -43,27 +54,27 @@ const Books = () => {
         </LinkContainer>
       </div>
       <CardDeck>
-        {books.map((book_info, idx) => {
+        {books.map((book: Book, idx) => {
           return (
             <Col className="container-fluid mt-4 px-0" key={idx}>
               <Card key={idx}>
                 <Card.Img
                   variant="top"
                   src={
-                    book_info["cover_image_url"] !== ""
-                      ? book_info["cover_image_url"]
+                    book.cover_image_url !== ""
+                      ? book.cover_image_url
                       : noimage
                   }
                   height="400"
                   style={{ objectFit: "contain", padding: "5px" }}
                 />
                 <Card.Body>
-                  <Card.Title>{book_info["title"]}</Card.Title>
+                  <Card.Title>{book.title}</Card.Title>
                   <BooksInfoTable
-                    isbn={book_info["isbn"]}
-                    quantity={book_info["remain"]}
+                    isbn={book.isbn}
+                    quantity={book.remain}
                   />
-                  <LinkContainer to={"/info/" + book_info["id"]}>
+                  <LinkContainer to={"/books/" + book["id"]}>
                     <Button>Show detail</Button>
                   </LinkContainer>
                 </Card.Body>

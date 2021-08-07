@@ -25,7 +25,7 @@ export class UsersService {
     return this.userRepository.findOne(id, { relations: ["groups"] })
   }
 
-  findBy(condition: {}) {
+  findOneBy(condition: {}) {
     return this.userRepository.findOne(condition);
   } 
 
@@ -35,7 +35,6 @@ export class UsersService {
 
   async set(id: number, setUserDto: SetUserDto) {
     try {
-      console.log(setUserDto);
       await this.userRepository.createQueryBuilder('users')
         .update(User)
         .whereInIds([id])

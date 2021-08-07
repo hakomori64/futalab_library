@@ -9,15 +9,18 @@ import { BorrowModule } from './borrow/borrow.module';
 import { RentalsModule } from './rentals/rentals.module';
 import { ReturnModule } from './return/return.module';
 import { BookModule } from './book/book.module';
+import { GroupUsersModule } from './users/users.module';
+import { User } from 'src/users/entities/user.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Group]),
+    TypeOrmModule.forFeature([Group, User]),
     RouterModule.forRoutes(route),
     BookModule,
     ReturnModule,
     BorrowModule,
-    RentalsModule
+    RentalsModule,
+    GroupUsersModule,
   ],
   controllers: [GroupsController],
   providers: [GroupsService]

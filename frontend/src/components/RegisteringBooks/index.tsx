@@ -41,7 +41,6 @@ const RegisteringBooks: FC<{}> = () => {
     }
 
     let formData = new FormData();
-    console.log(event.target.files[0]);
     formData.append("image", event.target.files[0]);
 
     const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/photos`, {
@@ -87,7 +86,6 @@ const RegisteringBooks: FC<{}> = () => {
     }*/
 
     if (!errorOccured) {
-      console.log("here");
       const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/books/`, {
         method: "POST",
         headers: {

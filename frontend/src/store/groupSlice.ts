@@ -4,6 +4,13 @@ import { getGroups } from '../repositories/groupRepository';
 
 import { AppDispatch, RootState } from './';
 
+type GroupState = {
+    loading: boolean,
+    error: Error | null,
+    groups: Group[],
+    selectedGroupId: number | null
+}
+
 export const groupSlice = createSlice({
     name: 'group',
     initialState: {
@@ -11,7 +18,7 @@ export const groupSlice = createSlice({
         error: null,
         groups: [] as Group[],
         selectedGroupId: null
-    },
+    } as GroupState,
     reducers: {
         fetchStart(state) {
             state.loading = true;
@@ -26,12 +33,27 @@ export const groupSlice = createSlice({
             state.error = null;
             state.groups = action.payload.groups;
             state.selectedGroupId = action.payload.selectedGroupId;
+        },
+
+        setGroupIdStart(state) {
+            state.loading = true;
+            state.error = null;
+        },
+        setGroupIdSuccess(state, action) {
+            state.loading = false;
+            state.error = null;
+            state.selectedGroupId = action.payload.selectedGroupId;
+        },
+        setGroupIdFailure(state, action) {
+            state.loading = false;
+            state.error = action.payload;
         }
     }
 });
 
 export const {
     fetchStart, fetchFailure, fetchSuccess, // get groups
+    setGroupIdStart, setGroupIdFailure, setGroupIdSuccess,
 } = groupSlice.actions;
 
 const _setGroups = async () => {
@@ -59,6 +81,8 @@ const _setGroups = async () => {
     };
 };
 
+
+// functions called within other files
 export const fetchGroups = () => async (dispatch: AppDispatch) => {
     try {
         dispatch(fetchStart());
@@ -67,6 +91,19 @@ export const fetchGroups = () => async (dispatch: AppDispatch) => {
         dispatch(fetchFailure(error));
     }
 }
+
+export const setSelectedGroupId = (id: number) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(setGroupIdStart());
+        localStorage.setItem('selectedGroupId', id.toString());
+        dispatch(setGroupIdSuccess({ selectedGroupId: id }));
+    } catch (error) {
+        dispatch(setGroupIdFailure(error));
+    }
+}
+
+
+// selectors
 
 export const selectGroup = (state: RootState) => state.group;
 

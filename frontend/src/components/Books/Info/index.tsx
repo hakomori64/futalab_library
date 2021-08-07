@@ -1,24 +1,45 @@
 import { FC, useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { RouteComponentProps } from "react-router-dom";
-import noimage from "./../../img/NoImage.svg";
-import { Book } from "../../types";
+import { RouteComponentProps, useParams } from "react-router-dom";
+import noimage from "./../../../img/NoImage.svg";
+import { Book } from "../../../types";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBooks, selectBook } from "store/bookSlice";
+import { selectGroup, setSelectedGroupId } from "store/groupSlice";
 
-type BookIdProps = RouteComponentProps<{
+type BookInfoParams = {
   id: string;
-}>;
+}
 
-const Information: FC<BookIdProps> = (props) => {
-  const id = props.match.params.id;
+const BookInfo = () => {
+  
+  const dispatch = useDispatch();
+  const { loading, books } = useSelector(selectBook);
+  const { selectedGroupId } = useSelector(selectGroup);
+  const { id } = useParams<BookInfoParams>();
 
-  const [book, setBook] = useState({} as Book);
+  console.log(`selectedGroupId: ${selectedGroupId}`);
+
   useEffect(() => {
     (async () => {
-      const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/books/${id}`);
-      setBook(await res.json());
+      if (selectedGroupId != null) {
+        dispatch(fetchBooks(selectedGroupId))
+      }
     })();
-  }, []);
+  }, [dispatch, selectedGroupId]);
+
+  if (loading) {
+    return (<div>loading...</div>);
+  }
+
+  console.log(`build books: ${books}`);
+
+  const book = books.find((book) => book.id === +id);
+  if (book === undefined) {
+    return (<div>No book available</div>);
+  }
+
 
   return (
     <>
@@ -30,7 +51,7 @@ const Information: FC<BookIdProps> = (props) => {
       />
       <div className="my-3 d-flex flex-row">
         <div className="mx-1">
-          <LinkContainer to={"/edit/" + id}>
+          <LinkContainer to={`/books/${id}/edit`}>
             <Button>本の情報を編集する</Button>
           </LinkContainer>
         </div>
@@ -62,4 +83,4 @@ const Information: FC<BookIdProps> = (props) => {
   );
 };
 
-export default Information;
+export default BookInfo;

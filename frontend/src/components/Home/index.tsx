@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect } from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { selectGroup, fetchGroups } from '../../store/groupSlice';
@@ -17,7 +18,6 @@ const Home = () => {
         if (user === null) return;
 
         // register user information
-        console.log('register user info');
         const token = await getAccessTokenSilently({
           audience: process.env.REACT_APP_API_ENDPOINT
         });
@@ -40,15 +40,16 @@ const Home = () => {
             sub: user!.sub
           })
         })
-        console.log('fetch complete');
       }
     })()
   }, [signup])
 
-  console.log("groups");
-  console.log(groups);
   return (
-    <div>Hello This is your home page</div>
+    <div>
+      <button onClick={async () => {
+        await axios.post('http://localhost:3001/api/groups/4/users/join', { user_id: 65 });
+      }}>add user</button>
+    </div>
   );
 };
 

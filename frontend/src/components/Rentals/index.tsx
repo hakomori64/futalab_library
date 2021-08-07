@@ -22,7 +22,6 @@ const Rentals = () => {
   };
 
   const handleConfirm = async () => {
-    console.log("returning content");
     const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/returns`, {
       method: "POST",
       headers: {
@@ -35,8 +34,6 @@ const Rentals = () => {
         book_id: selectedRental.book_id,
       }),
     });
-
-    console.log("res.status " + res.status);
 
     if (res.status === 201) {
       history.go(0);

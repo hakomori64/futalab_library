@@ -31,7 +31,6 @@ export class BookService {
 
   async set(id: number, setBookDto: SetBookDto) {
     try {
-      console.log(setBookDto);
       await this.bookRepository.createQueryBuilder('books')
       .update(Book)
       .whereInIds([id])

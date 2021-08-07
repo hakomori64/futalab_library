@@ -28,10 +28,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     async validate(payload: any, done: VerifiedCallback) {
         if (!payload) {
-            this.logger.debug('empty payload');
+            this.logger.debug('user token validation failed');
             done(new UnauthorizedException(), false);
         }
-        this.logger.debug('validation passed');
 
         const user = await this.usersService.findOneBy({ sub: payload.sub }) ?? {};
 

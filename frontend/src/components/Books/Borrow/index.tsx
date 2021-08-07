@@ -1,35 +1,52 @@
 import React, { FC, useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { RouteComponentProps, useHistory } from "react-router-dom";
-import { Book } from "../../types";
+import { useDispatch, useSelector } from "react-redux";
+import { RouteComponentProps, useHistory, useParams } from "react-router-dom";
+import { fetchBooks, selectBook } from "store/bookSlice";
+import { fetchRentals } from "store/rentalSlice";
+import { selectGroup } from "store/groupSlice";
+import { Book } from "../../../types";
+import { borrowBook } from '../../../repositories/borrowRepository';
 
-type BookIdProps = RouteComponentProps<{
-  id: string;
-}>;
+type RentalBorrowParams = {
+  id: string,
+};
 
-const Borrowing: FC<BookIdProps> = (props) => {
-  const id = props.match.params.id;
+const BookBorrow = () => {
+
+  const dispatch = useDispatch();
+  const { loading, books } = useSelector(selectBook);
+  const { selectedGroupId, groups } = useSelector(selectGroup);
+  const { id } = useParams<RentalBorrowParams>(); // book_id
 
   // formの値を保存する
-  const [userName, setUserName] = useState("");
-  const [userNameErr, setUserNameErr] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [quantityErr, setQuantityErr] = useState("");
 
+  const [error, setError] = useState('');
+
   const history = useHistory();
 
-  const [book, setBook] = useState({} as Book);
+  const book = books.find((book) => book.id === +id);
+  const group = groups.find((group) => group.id === selectedGroupId);
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/books/${id}`);
-      setBook(await res.json());
+      if (selectedGroupId != null) {
+        dispatch(fetchBooks(selectedGroupId));
+      }
     })();
-  }, []);
+  }, [dispatch, selectedGroupId]);
 
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserName(event.target.value);
-  };
+
+  if (loading) {
+    return (<div>loading...</div>);
+  }
+
+  if (book === undefined || group === undefined) {
+    return (<div>No book available</div>);
+  }
+
   const handleBookNumChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuantity(Number(event.target.value));
   };
@@ -45,27 +62,17 @@ const Borrowing: FC<BookIdProps> = (props) => {
       setQuantityErr("指定された冊数は在庫がありません。");
       errorOccured = true;
     }
-    if (userName.length === 0) {
-      setUserNameErr("借りる人の名前を入力してください。");
-      errorOccured = true;
-    }
 
     if (!errorOccured) {
-      const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/borrows`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_name: userName,
+      try {
+        await borrowBook(selectedGroupId!, {
           quantity: quantity,
-          book_id: id,
-        }),
-      });
-
-      if (res.status === 201) {
-        history.replace("/rentals");
+          book_id: +id,
+          group_id: selectedGroupId!
+        });
+        dispatch(fetchRentals(selectedGroupId!));
+      } catch (error) {
+        setError('貸し出し処理中にエラーが発生しました');
       }
     }
   };
@@ -76,16 +83,6 @@ const Borrowing: FC<BookIdProps> = (props) => {
         {book.title} を借りる
       </h1>
       <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formUserName">
-          <Form.Label>あなたのお名前</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="あなたの名前を入力してください"
-            value={userName}
-            onChange={handleNameChange}
-          />
-          {userNameErr !== "" && <span className="small text-danger">{userNameErr}</span>}
-        </Form.Group>
         <Form.Group controlId="formBorrowBooksQuantity">
           <Form.Label>借りる冊数</Form.Label>
           <Form.Control
@@ -99,8 +96,9 @@ const Borrowing: FC<BookIdProps> = (props) => {
         </Form.Group>
         <Button type="submit">送信</Button>
       </Form>
+      {error !== "" && <div>{error}</div>}
     </>
   );
 };
 
-export default Borrowing;
+export default BookBorrow;

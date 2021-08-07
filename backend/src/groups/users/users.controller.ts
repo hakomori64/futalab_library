@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Logger, UseInterceptors, ClassSerializerInterceptor, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Logger, UseInterceptors, ClassSerializerInterceptor, Put, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from './users.service';
 
 @Controller()
+@UseGuards(AuthGuard('jwt'))
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,

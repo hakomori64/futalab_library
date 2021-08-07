@@ -15,7 +15,7 @@ import Rentals from "./components/Rentals";
 import BookInfo from "./components/Books/Info";
 import BookEdit from "./components/Books/Edit";
 import RegisteringBooks from "./components/RegisteringBooks";
-import Borrowing from "./components/Borrowing";
+import BookBorrow from "./components/Books/Borrow";
 
 import { useDispatch } from 'react-redux';
 import { fetchGroups } from './store/groupSlice';
@@ -48,11 +48,12 @@ function App() {
         <Route exact path="/" component={() => withHeader(Index)} />
         <ProtectedRoute exact path="/home" component={() => withHeader(Home)} />
         <ProtectedRoute exact path="/books" component={() => withHeader(Books)} />
+        <ProtectedRoute exact path="/books/register" component={() => withHeader(RegisteringBooks)} />
         <ProtectedRoute exact path="/books/:id" component={() => withHeader(BookInfo)} />
         <ProtectedRoute exact path="/books/:id/edit" component={() => withHeader(BookEdit)} />
+        <ProtectedRoute exact path="/books/:id/borrow" component={() => withHeader(BookBorrow)} />
+
         <ProtectedRoute exact path="/rentals" component={() => withHeader(Rentals)} />
-        <ProtectedRoute exact path="/register" component={() => withHeader(RegisteringBooks)} />
-        <ProtectedRoute exact path="/borrow/:id" component={() => withHeader(Borrowing)} />
       </Switch>
     </Router>
   );

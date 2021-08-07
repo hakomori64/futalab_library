@@ -15,35 +15,19 @@ export class RentalsService {
     private borrowRepository: Repository<Borrow>
   ) {}
 
-  create(createRentalDto: CreateRentalDto) {
-    return 'This action adds a new rental';
-  }
-
   async findAll(group_id: number) {
-    const returns = (await this.returnRepository.find({ where: { group_id: group_id }, relations: ["book"] })).map(rtn => {
+    const returns = (await this.returnRepository.find({ where: { group_id: group_id }, relations: ["book", "user"] })).map(rtn => {
       return {
         "type": "return",
         ...rtn,
       };
     })
-    const borrows = (await this.borrowRepository.find({ where: {group_id: group_id}, relations: ["book"]})).map(borrow => {
+    const borrows = (await this.borrowRepository.find({ where: {group_id: group_id}, relations: ["book", "user"]})).map(borrow => {
       return {
         "type": "borrow",
         ...borrow,
       };
     })
     return [...returns, ...borrows].sort((a : any, b : any) => (a.date as Date) < (b.date as Date) ? 1 : -1);
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} rental`;
-  }
-
-  update(id: number, updateRentalDto: UpdateRentalDto) {
-    return `This action updates a #${id} rental`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} rental`;
   }
 }

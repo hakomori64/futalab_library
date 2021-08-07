@@ -1,8 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateBorrowDto {
-    @ApiProperty()
-    readonly user_name: string;
 
     @ApiProperty()
     readonly quantity: number;
@@ -12,4 +10,6 @@ export class CreateBorrowDto {
 
     @ApiProperty()
     readonly group_id: number;
+
+    readonly user_id: number;
 }

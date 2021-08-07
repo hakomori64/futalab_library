@@ -1,17 +1,23 @@
-import { Controller, Get, Post, Body, Param, Delete, Logger, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Logger, Put, Request, UseGuards } from '@nestjs/common';
 import { ReturnService } from './return.service';
 import { CreateReturnDto } from './dto/create-return.dto';
 import { UpdateReturnDto } from './dto/update-return.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller()
+@UseGuards(AuthGuard('jwt'))
 export class ReturnController {
   private readonly logger = new Logger(ReturnController.name);
   
   constructor(private readonly returnService: ReturnService) {}
 
   @Post()
-  create(@Body() createReturnDto: CreateReturnDto) {
-    return this.returnService.create(createReturnDto);
+  create(@Request() req, @Body() createReturnDto: CreateReturnDto) {
+    const data = {
+      ...createReturnDto,
+      user_id: req.user.id
+    }
+    return this.returnService.create(data);
   }
 
   @Get()
@@ -25,8 +31,12 @@ export class ReturnController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateReturnDto: UpdateReturnDto) {
-    return this.returnService.update(+id, updateReturnDto);
+  update(@Request() req, @Param('id') id: string, @Body() updateReturnDto: UpdateReturnDto) {
+    const data = {
+      ...updateReturnDto,
+      user_id: req.user.id
+    };
+    return this.returnService.update(+id, data);
   }
 
   @Delete(':id')

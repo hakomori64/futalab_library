@@ -1,17 +1,23 @@
-import { Controller, Get, Post, Body, Param, Delete, Logger, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Logger, Put, Request, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { BorrowService } from './borrow.service';
 import { CreateBorrowDto } from './dto/create-borrow.dto';
 import { UpdateBorrowDto } from './dto/update-borrow.dto';
 
 @Controller()
+@UseGuards(AuthGuard('jwt'))
 export class BorrowController {
   private readonly logger = new Logger(BorrowController.name);
 
   constructor(private readonly borrowService: BorrowService) {}
 
   @Post()
-  create(@Body() createBorrowDto: CreateBorrowDto) {
-    return this.borrowService.create(createBorrowDto);
+  create(@Request() req, @Body() createBorrowDto: CreateBorrowDto) {
+    const data = {
+      ...createBorrowDto,
+      user_id: req.user.id
+    }
+    return this.borrowService.create(data);
   }
 
   @Get()
@@ -25,8 +31,12 @@ export class BorrowController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateBorrowDto: UpdateBorrowDto) {
-    return this.borrowService.update(+id, updateBorrowDto);
+  update(@Request() req, @Param('id') id: string, @Body() updateBorrowDto: UpdateBorrowDto) {
+    const data = {
+      ...updateBorrowDto,
+      user_id: req.user.id
+    };
+    return this.borrowService.update(+id, data);
   }
 
   @Delete(':id')

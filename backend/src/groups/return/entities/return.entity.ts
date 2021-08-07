@@ -1,14 +1,22 @@
 import { Book } from '../../book/entities/book.entity';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Group } from 'src/groups/entities/group.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @Entity({name: 'returns'})
 export class Return {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ length: 100 })
-    user_name: string;
+    @Column()
+    user_id: number;
+
+    @ManyToOne(type => User, (user: User) => user.returns)
+    @JoinColumn({
+        name: 'user_id',
+        referencedColumnName: 'id'
+    })
+    user: User;
 
     @Column()
     book_id: number;

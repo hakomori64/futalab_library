@@ -56,7 +56,7 @@ const BookInfo = () => {
           </LinkContainer>
         </div>
         <div>
-          <LinkContainer to={"/borrow/" + id}>
+          <LinkContainer to={`/books/${id}/borrow`}>
             <Button>借りる</Button>
           </LinkContainer>
         </div>

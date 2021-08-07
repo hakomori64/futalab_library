@@ -8,6 +8,28 @@ export const getBooks = async (group_id: number) : Promise<Book[]> => {
     return res.data;
 }
 
+export const registerBook = async (group_id: number, data: {
+    title: string,
+    isbn: string,
+    quantity: number,
+    cover_image_url: string,
+    group_id: number
+}) : Promise<Book> => {
+    const res = await axios.post(`${craftUrl(group_id)}`, data);
+    switch (res.status) {
+        case 201:
+            return res.data;
+        case 400:
+            throw Error('invalid data format');
+        case 401:
+            throw Error('not authorized');
+        case 500:
+            throw Error('internal server error')
+        default:
+            throw Error('something went wrong while updating book information');
+    };
+}
+
 export const updateBook = async (group_id: number, book_id: number, data: {
     title: string,
     isbn: string,

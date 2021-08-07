@@ -52,12 +52,9 @@ const BookEdit = () => {
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    console.log('handleFileChange called');
     if (event.target.files == null || event.target.files.length !== 1) {
       return;
     }
-
-    console.log('sending file to server');
 
     let formData = new FormData();
     formData.append("image", event.target.files[0]);
@@ -92,19 +89,6 @@ const BookEdit = () => {
       setQuantityErr("0以上の値を入力してください");
       errorOccured = true;
     }
-
-    /*
-    const re = new RegExp(
-      "^https?://(?:[a-z0-9-]+.)+[a-z]{2,6}(?:/[^/#?]+)+.(?:jpg|gif|png)$"
-    );
-
-    if (coverImageUrl !== "" && !coverImageUrl.match(re)) {
-      setCoverImageUrlErr(
-        "画像のURLに問題があるようです。アップし直してみてください。"
-      );
-
-      errorOccured = true;
-    }*/
 
     if (!errorOccured) {
       try {

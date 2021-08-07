@@ -1,10 +1,18 @@
 import React, { FC, useEffect, useState, useRef } from "react";
 import { Button, Form } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { registerBook } from "../../../repositories/bookRepository";
+import { selectGroup } from "store/groupSlice";
+import { fetchBooks } from "store/bookSlice";
+import { uploadPhoto } from 'repositories/photoRepository';
 
-const RegisteringBooks: FC<{}> = () => {
+const BookRegister = () => {
+
+  const dispatch = useDispatch();
+  const { selectedGroupId } = useSelector(selectGroup);
+
   const history = useHistory();
-  const imageRef = useRef(null);
 
   const [title, setTitle] = useState("");
   const [titleErr, setTitleErr] = useState("");
@@ -17,6 +25,8 @@ const RegisteringBooks: FC<{}> = () => {
 
   const [coverImageUrl, setCoverImageUrl] = useState("");
   const [coverImageUrlErr, setCoverImageUrlErr] = useState("");
+
+  const [error, setError] = useState("");
 
   // onChange handlers
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,11 +53,12 @@ const RegisteringBooks: FC<{}> = () => {
     let formData = new FormData();
     formData.append("image", event.target.files[0]);
 
-    const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/photos`, {
-      method: "POST",
-      body: formData,
-    });
-    setCoverImageUrl((await res.json())["cover_image_url"]);
+    try {
+      const data = await uploadPhoto(formData);
+      setCoverImageUrl(data['cover_image_url']);
+    } catch (err) {
+      setCoverImageUrlErr('画像の選択に失敗しました。');
+    }
   };
 
   // handle submit
@@ -73,35 +84,19 @@ const RegisteringBooks: FC<{}> = () => {
       errorOccured = true;
     }
 
-    /*
-    const re = new RegExp(
-      "^https?://(?:[a-z0-9-]+.)+[a-z]{2,6}(?:/[^/#?]+)+.(?:jpg|gif|png)$"
-    );
-    if (coverImageUrl !== "" && !coverImageUrl.match(re)) {
-      console.log(coverImageUrl);
-      setCoverImageUrlErr(
-        "画像のURLに問題があるようです。アップし直してみてください。"
-      );
-      errorOccured = true;
-    }*/
-
     if (!errorOccured) {
-      const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/books/`, {
-        method: "POST",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      try {
+        await registerBook(selectedGroupId!, {
           title: title,
           isbn: isbn,
           cover_image_url: coverImageUrl,
           quantity: quantity,
-        }),
-      });
-
-      if (res.status === 201) {
+          group_id: selectedGroupId!
+        });
+        dispatch(fetchBooks(selectedGroupId!));
         history.replace("/books");
+      } catch (error) {
+        setError('書籍の登録中にエラーが発生しました。');
       }
     }
   };
@@ -134,7 +129,7 @@ const RegisteringBooks: FC<{}> = () => {
           <Form.Label>在庫数</Form.Label>
           <Form.Control
             type="number"
-            placeholder="研究室で持っている本の冊数を入力してください"
+            placeholder="本の冊数を入力してください"
             value={quantity}
             onChange={handleQuantityChange}
           />
@@ -157,8 +152,9 @@ const RegisteringBooks: FC<{}> = () => {
         </Form.Group>
         <Button type="submit">送信</Button>
       </Form>
+      {error && <div>{error}</div>}
     </>
   );
 };
 
-export default RegisteringBooks;
+export default BookRegister;

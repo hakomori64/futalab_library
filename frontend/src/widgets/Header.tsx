@@ -25,13 +25,13 @@ const Header = () => {
         <>
         <Navbar.Toggle aria-controls="basic-navbar-nav-logged-in" />
         <Navbar.Collapse id="basic-navbar-nav-logged-in">
-          <NavDropdown title={<span className="text-white">{loading ? 'Loading...' : groups.length > 0 ? groups[index].name : 'グループなし'}</span>} className="text-white" id="nav-dropdown">
+          <NavDropdown title={<span className="text-white">{loading ? 'Loading...' : groups.length > 0 ? groups[index].name.slice(0, 20) + (groups[index].name.length > 20 ? '...' : '') : 'グループなし'}</span>} className="text-white" id="nav-dropdown">
             {groups.slice(0, 5).map((group: Group) => {
               return (
-                <NavDropdown.Item onClick={() => dispatch(setSelectedGroupId(group.id))}>{group.name}</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => dispatch(setSelectedGroupId(group.id))}>{group.name.slice(0, 20) + (group.name.length > 20 ? '...' : '')}</NavDropdown.Item>
               );
             })}
-            <NavDropdown.Item href="#TODO_groups">すべてのグループを表示</NavDropdown.Item>
+            <NavDropdown.Item href="/groups">すべてのグループを表示</NavDropdown.Item>
             <NavDropdown.Item href="#TODO_add_group">グループを作成</NavDropdown.Item>
           </NavDropdown>
           <Nav className="mr-auto">

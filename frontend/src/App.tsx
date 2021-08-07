@@ -11,6 +11,7 @@ import Header from "./widgets/Header";
 import Home from './components/Home';
 import Index from "./components/Index";
 import Books from "./components/Books";
+import Groups from "./components/Groups";
 import Rentals from "./components/Rentals";
 import BookInfo from "./components/Books/Info";
 import BookEdit from "./components/Books/Edit";
@@ -54,6 +55,7 @@ function App() {
         <ProtectedRoute exact path="/books/:id/borrow" component={() => withHeader(BookBorrow)} />
 
         <ProtectedRoute exact path="/rentals" component={() => withHeader(Rentals)} />
+        <ProtectedRoute exact path="/groups" component={Groups} />
       </Switch>
     </Router>
   );

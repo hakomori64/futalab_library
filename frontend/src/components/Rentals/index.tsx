@@ -1,15 +1,23 @@
 import { useState, useEffect } from "react";
 import { Table, Image, Button, Modal } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
+import { selectGroup } from "store/groupSlice";
+import { fetchRentals, selectRental } from "store/rentalSlice";
 import { Rental } from "../../types";
 import returnArrow from "./return_arrow.webp";
+import { returnBook } from '../../repositories/returnRepository';
 
 const Rentals = () => {
+
+  const dispatch = useDispatch();
+  const { selectedGroupId } = useSelector(selectGroup);
+  const { loading, error, rentals } = useSelector(selectRental)
+
   const history = useHistory();
 
   const [show, setShow] = useState(false);
   const [selectedRental, setSelectedRental] = useState({} as Rental);
-  const [rentals, setRentals] = useState([]);
 
   const handleClose = () => {
     setShow(false);
@@ -22,33 +30,26 @@ const Rentals = () => {
   };
 
   const handleConfirm = async () => {
-    console.log("returning content");
-    const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/returns`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_name: selectedRental.user_name,
+
+    try {
+      await returnBook(selectedGroupId!, {
         quantity: selectedRental.quantity,
         book_id: selectedRental.book_id,
-      }),
-    });
-
-    console.log("res.status " + res.status);
-
-    if (res.status === 201) {
+        group_id: selectedGroupId!
+      });
       history.go(0);
+    } catch (error) {
+      console.log(error);
     }
   };
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/rentals`);
-      setRentals(await res.json());
+      if (selectedGroupId != null) {
+        dispatch(fetchRentals(selectedGroupId));
+      }
     })();
-  }, []);
+  }, [dispatch, selectedGroupId]);
 
   return (
     <>
@@ -68,14 +69,14 @@ const Rentals = () => {
         <tbody>
           {rentals.map((rental, idx) => (
             <tr key={idx}>
-              <th>{rental["id"]}</th>
-              <td>{rental["user_name"]}</td>
-              <td>{rental["type"] === "return" ? "返却" : "貸出"}</td>
-              <td>{rental["book"]["title"]}</td>
-              <td>{new Date(rental["date"]).toLocaleDateString("ja-JP")}</td>
-              <td>{rental["quantity"]}</td>
+              <th>{rental.id}</th>
+              <td>{rental.user.name}</td>
+              <td>{rental.type === "return" ? "返却" : "貸出"}</td>
+              <td>{rental.book.title}</td>
+              <td>{new Date(rental.date).toLocaleDateString("ja-JP")}</td>
+              <td>{rental.quantity}</td>
               <td>
-                {rental["type"] === "borrow" && (
+                {rental.type === "borrow" && (
                   <Image
                     src={returnArrow}
                     style={{ width: "18px", cursor: "pointer" }}

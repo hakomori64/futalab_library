@@ -11,24 +11,24 @@ async function bootstrap() {
   });
   const configService = app.get(ConfigService);
   app.setGlobalPrefix('api');
-  
+
   const config = new DocumentBuilder()
     .setTitle('API Docs')
     .setDescription('This Doc shows how to use this api')
     .setVersion('0.1')
     .addTag('library')
     .build();
-    
-    const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('docs', app, document);
-    
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, document);
+
   app.enableCors({
     origin: '*',
-    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
+    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
   });
 
   await app.listen(configService.get('SERVER_PORT') | 8000);
-  
+
   if (module.hot) {
     module.hot.accept();
     module.hot.dispose(() => app.close());

@@ -8,7 +8,7 @@ export const getBooks = async (group_id: number) : Promise<Book[]> => {
     return res.data;
 }
 
-export const registerBook = async (group_id: number, data: {
+export const createBook = async (group_id: number, data: {
     title: string,
     isbn: string,
     quantity: number,

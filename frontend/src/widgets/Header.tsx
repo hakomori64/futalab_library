@@ -32,7 +32,7 @@ const Header = () => {
               );
             })}
             <NavDropdown.Item href="/groups">すべてのグループを表示</NavDropdown.Item>
-            <NavDropdown.Item href="#TODO_add_group">グループを作成</NavDropdown.Item>
+            <NavDropdown.Item href="/groups/create">グループを作成</NavDropdown.Item>
           </NavDropdown>
           <Nav className="mr-auto">
             <LinkContainer to="/books">

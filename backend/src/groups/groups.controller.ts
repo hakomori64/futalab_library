@@ -12,8 +12,8 @@ export class GroupsController {
   constructor(private readonly groupsService: GroupsService) {}
 
   @Post()
-  create(@Body() createGroupDto: CreateGroupDto) {
-    return this.groupsService.create(createGroupDto);
+  create(@Request() req, @Body() createGroupDto: CreateGroupDto) {
+    return this.groupsService.create(req.user, createGroupDto);
   }
 
   

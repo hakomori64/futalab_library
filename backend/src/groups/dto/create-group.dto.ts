@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { User } from "src/users/entities/user.entity";
 
 export class CreateGroupDto {
     @ApiProperty()
@@ -6,4 +7,6 @@ export class CreateGroupDto {
 
     @ApiProperty()
     readonly name: string;
+
+    readonly users: User[];
 }

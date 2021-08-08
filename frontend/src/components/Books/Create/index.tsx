@@ -2,12 +2,12 @@ import React, { FC, useEffect, useState, useRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { registerBook } from "../../../repositories/bookRepository";
+import { createBook } from "../../../repositories/bookRepository";
 import { selectGroup } from "store/groupSlice";
 import { fetchBooks } from "store/bookSlice";
 import { uploadPhoto } from 'repositories/photoRepository';
 
-const BookRegister = () => {
+const BookCreate = () => {
 
   const dispatch = useDispatch();
   const { selectedGroupId } = useSelector(selectGroup);
@@ -86,7 +86,7 @@ const BookRegister = () => {
 
     if (!errorOccured) {
       try {
-        await registerBook(selectedGroupId!, {
+        await createBook(selectedGroupId!, {
           title: title,
           isbn: isbn,
           cover_image_url: coverImageUrl,
@@ -157,4 +157,4 @@ const BookRegister = () => {
   );
 };
 
-export default BookRegister;
+export default BookCreate;

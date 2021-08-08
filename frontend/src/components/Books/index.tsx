@@ -49,7 +49,7 @@ const Books = () => {
   return (
     <>
       <div className="mt-3 d-flex flex-row justify-content-end">
-        <LinkContainer to={"/books/register"}>
+        <LinkContainer to={"/books/create"}>
           <Button className="btn-lg">本を登録する</Button>
         </LinkContainer>
       </div>

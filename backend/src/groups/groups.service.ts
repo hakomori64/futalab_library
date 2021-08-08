@@ -1,6 +1,7 @@
 import { Injectable, UseGuards } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { v1 as uuid } from 'uuid';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { SetGroupDto } from './dto/set-group.dto';
@@ -14,8 +15,13 @@ export class GroupsService {
     private groupRepository: Repository<Group>,
   ) {}
 
-  create(createGroupDto: CreateGroupDto) {
-    return this.groupRepository.save(createGroupDto);
+  create(user: User, createGroupDto: CreateGroupDto) {
+    const data = {
+      ...createGroupDto,
+      str_id: `${createGroupDto.name}-${uuid()}`,
+      users: [user]
+    };
+    return this.groupRepository.save(data);
   }
 
   findAll() {

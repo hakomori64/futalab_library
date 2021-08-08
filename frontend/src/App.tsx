@@ -12,10 +12,11 @@ import Home from './components/Home';
 import Index from "./components/Index";
 import Books from "./components/Books";
 import Groups from "./components/Groups";
+import GroupCreate from "./components/Groups/Create";
 import Rentals from "./components/Rentals";
 import BookInfo from "./components/Books/Info";
 import BookEdit from "./components/Books/Edit";
-import BookRegister from "./components/Books/Register";
+import BookCreate from "./components/Books/Create";
 import BookBorrow from "./components/Books/Borrow";
 
 import { useDispatch } from 'react-redux';
@@ -49,13 +50,15 @@ function App() {
         <Route exact path="/" component={() => withHeader(Index)} />
         <ProtectedRoute exact path="/home" component={() => withHeader(Home)} />
         <ProtectedRoute exact path="/books" component={() => withHeader(Books)} />
-        <ProtectedRoute exact path="/books/register" component={() => withHeader(BookRegister)} />
+        <ProtectedRoute exact path="/books/create" component={() => withHeader(BookCreate)} />
         <ProtectedRoute exact path="/books/:id" component={() => withHeader(BookInfo)} />
         <ProtectedRoute exact path="/books/:id/edit" component={() => withHeader(BookEdit)} />
         <ProtectedRoute exact path="/books/:id/borrow" component={() => withHeader(BookBorrow)} />
 
         <ProtectedRoute exact path="/rentals" component={() => withHeader(Rentals)} />
+
         <ProtectedRoute exact path="/groups" component={Groups} />
+        <ProtectedRoute exact path="/groups/create" component={GroupCreate} />
       </Switch>
     </Router>
   );

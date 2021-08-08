@@ -1,4 +1,4 @@
-type setFunc = () => string
+type setFunc = () => string;
 
 export class SetGroupDto {
     constructor(

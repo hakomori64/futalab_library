@@ -13,24 +13,24 @@ export const route: Routes = [
         children: [
             {
                 path: ':groupId/books',
-                module: BookModule
+                module: BookModule,
             },
             {
                 path: ':groupId/returns',
-                module: ReturnModule
+                module: ReturnModule,
             },
             {
                 path: ':groupId/borrows',
-                module: BorrowModule
+                module: BorrowModule,
             },
             {
                 path: ':groupId/rentals',
-                module: RentalsModule
+                module: RentalsModule,
             },
             {
                 path: ':groupId/users',
-                module: GroupUsersModule
-            }
-        ]
-    }
-]
+                module: GroupUsersModule,
+            },
+        ],
+    },
+];

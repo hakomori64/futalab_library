@@ -1,5 +1,5 @@
-import { Group } from "src/groups/entities/group.entity";
-import { Column, Entity, Index, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Group } from 'src/groups/entities/group.entity';
+import { Column, Entity, Index, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({name: 'users'})
 export class User {

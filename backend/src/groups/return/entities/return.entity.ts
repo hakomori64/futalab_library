@@ -14,7 +14,7 @@ export class Return {
     @ManyToOne(type => User, (user: User) => user.returns)
     @JoinColumn({
         name: 'user_id',
-        referencedColumnName: 'id'
+        referencedColumnName: 'id',
     })
     user: User;
 
@@ -24,7 +24,7 @@ export class Return {
     @ManyToOne(type => Book, (book) => book.returns)
     @JoinColumn({
         name: 'book_id',
-        referencedColumnName: 'id'
+        referencedColumnName: 'id',
     })
     book: Book;
 
@@ -34,7 +34,7 @@ export class Return {
     @ManyToOne(type => Group, (group: Group) => group.returns)
     @JoinColumn({
         name: 'group_id',
-        referencedColumnName: 'id'
+        referencedColumnName: 'id',
     })
     group: Group;
 

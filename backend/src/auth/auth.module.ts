@@ -7,6 +7,6 @@ import { UsersModule } from 'src/users/users.module';
 @Module({
     imports: [PassportModule, UsersModule],
     providers: [JwtStrategy],
-    exports: [JwtStrategy]
+    exports: [JwtStrategy],
 })
 export class AuthModule {}

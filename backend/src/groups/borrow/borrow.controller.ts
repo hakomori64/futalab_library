@@ -15,8 +15,8 @@ export class BorrowController {
   create(@Request() req, @Body() createBorrowDto: CreateBorrowDto) {
     const data = {
       ...createBorrowDto,
-      user_id: req.user.id
-    }
+      user_id: req.user.id,
+    };
     return this.borrowService.create(data);
   }
 
@@ -34,7 +34,7 @@ export class BorrowController {
   update(@Request() req, @Param('id') id: string, @Body() updateBorrowDto: UpdateBorrowDto) {
     const data = {
       ...updateBorrowDto,
-      user_id: req.user.id
+      user_id: req.user.id,
     };
     return this.borrowService.update(+id, data);
   }

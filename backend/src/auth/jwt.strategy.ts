@@ -1,4 +1,4 @@
-import { ManagementClient, User } from 'auth0';
+
 import { passportJwtSecret } from 'jwks-rsa';
 import { ExtractJwt, Strategy, VerifiedCallback } from 'passport-jwt';
 
@@ -11,18 +11,18 @@ import { UsersService } from 'src/users/users.service';
 export class JwtStrategy extends PassportStrategy(Strategy) {
     private readonly logger = new Logger(JwtStrategy.name);
     constructor(
-        private readonly usersService: UsersService
+        private readonly usersService: UsersService,
     ) {
         super({
             secretOrKeyProvider: passportJwtSecret({
                 cache: true,
                 rateLimit: true,
                 jwksRequestsPerMinute: 5,
-                jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
+                jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
             }),
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             audience: process.env.AUTH0_AUDIENCE,
-            issuer: `https://${process.env.AUTH0_DOMAIN}/`
+            issuer: `https://${process.env.AUTH0_DOMAIN}/`,
         });
     }
 

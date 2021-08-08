@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { RentalsService } from './rentals.service';
 import { RentalsController } from './rentals.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -15,6 +15,6 @@ import { BorrowModule } from '../borrow/borrow.module';
     BorrowModule,
   ],
   controllers: [RentalsController],
-  providers: [RentalsService]
+  providers: [RentalsService],
 })
 export class RentalsModule {}

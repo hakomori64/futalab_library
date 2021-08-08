@@ -1,4 +1,4 @@
-import { Injectable, UseGuards } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { v1 as uuid } from 'uuid';
@@ -19,36 +19,36 @@ export class GroupsService {
     const data = {
       ...createGroupDto,
       str_id: `${createGroupDto.name}-${uuid()}`,
-      users: [user]
+      users: [user],
     };
     return this.groupRepository.save(data);
   }
 
   findAll() {
-    return this.groupRepository.find({ relations: ["users"] })
+    return this.groupRepository.find({ relations: ['users'] });
   }
 
   findOne(id: number) {
-    return this.groupRepository.findOne(id, { relations: ["users"] })
+    return this.groupRepository.findOne(id, { relations: ['users'] });
   }
 
   findAllByUser(user: User) {
     return this.groupRepository.find({
       join: { alias: 'groups', innerJoin: { users: 'groups.users' }},
-      relations: ["users"],
+      relations: ['users'],
       where: qb => {
-        qb.where('users.id = :id', { id: user.id })
-      }
+        qb.where('users.id = :id', { id: user.id });
+      },
     });
   }
 
   findOneByUser(id: number, user: User) {
     return this.groupRepository.findOne(id, {
       join: { alias: 'groups', innerJoin: { users: 'groups.users' }},
-      relations: ["users"],
+      relations: ['users'],
       where: qb => {
-        qb.where('users.id = :id', { id: user.id })
-      }
+        qb.where('users.id = :id', { id: user.id });
+      },
     });
   }
 
@@ -63,11 +63,11 @@ export class GroupsService {
         .whereInIds([id])
         .set(setGroupDto)
         .execute();
-      
-      return this.groupRepository.findOne(id, { relations: ["users"] });
+
+      return this.groupRepository.findOne(id, { relations: ['users'] });
     } catch (exception) {
       return {
-        "error": "something went wrong"
+        error: 'something went wrong',
       };
     }
   }

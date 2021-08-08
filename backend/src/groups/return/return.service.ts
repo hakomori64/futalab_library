@@ -9,7 +9,7 @@ import { Return } from './entities/return.entity';
 export class ReturnService {
   constructor(
     @InjectRepository(Return)
-    private returnRepository: Repository<Return>
+    private returnRepository: Repository<Return>,
   ) {}
 
   create(createReturnDto: CreateReturnDto) {
@@ -19,18 +19,18 @@ export class ReturnService {
   }
 
   findAll() {
-    return this.returnRepository.find({ relations: ["book"] });
+    return this.returnRepository.find({ relations: ['book'] });
   }
 
   findOne(id: number) {
-    return this.returnRepository.findOne(id, { relations: ["book"] });
+    return this.returnRepository.findOne(id, { relations: ['book'] });
   }
 
   update(id: number, updateReturnDto: UpdateReturnDto) {
     return this.returnRepository.save({ ...UpdateReturnDto, id: Number(id) });
   }
 
-  async remove(id: number) : Promise<void> {
+  async remove(id: number): Promise<void> {
     await this.returnRepository.delete(id);
   }
 }

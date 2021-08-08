@@ -1,6 +1,5 @@
-import { Controller, Get, Post, Body, Param, Delete, Logger, Put, UseInterceptors, UploadedFile, ClassSerializerInterceptor, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Logger, Put, UseInterceptors, ClassSerializerInterceptor, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
@@ -34,14 +33,14 @@ export class BookController {
   @Put(':id/increment')
   incrementQuantity(@Param('id') id: string) {
     return this.bookService.set(+id, {
-      quantity: () => "quantity + 1"
+      quantity: () => 'quantity + 1',
     });
   }
 
   @Put(':id/decrement')
   decrementQuantity(@Param('id') id: string) {
     return this.bookService.set(+id, {
-      quantity: () => "quantity - 1"
+      quantity: () => 'quantity - 1',
     });
   }
 

@@ -1,7 +1,7 @@
-import { Borrow } from "src/groups/borrow/entities/borrow.entity";
-import { Group } from "src/groups/entities/group.entity";
-import { Return } from "src/groups/return/entities/return.entity";
-import { Column, Entity, Index, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Borrow } from 'src/groups/borrow/entities/borrow.entity';
+import { Group } from 'src/groups/entities/group.entity';
+import { Return } from 'src/groups/return/entities/return.entity';
+import { Column, Entity, Index, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({name: 'users'})
 export class User {

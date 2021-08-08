@@ -11,13 +11,17 @@ import Header from "./widgets/Header";
 import Home from './components/Home';
 import Index from "./components/Index";
 import Books from "./components/Books";
-import Groups from "./components/Groups";
-import GroupCreate from "./components/Groups/Create";
-import Rentals from "./components/Rentals";
 import BookInfo from "./components/Books/Info";
-import BookEdit from "./components/Books/Edit";
 import BookCreate from "./components/Books/Create";
+import BookEdit from "./components/Books/Edit";
 import BookBorrow from "./components/Books/Borrow";
+
+import Rentals from "./components/Rentals";
+
+import Groups from "./components/Groups";
+import GroupInfo from "./components/Groups/Info";
+import GroupCreate from "./components/Groups/Create";
+
 
 import { useDispatch } from 'react-redux';
 import { fetchGroups } from './store/groupSlice';
@@ -59,6 +63,7 @@ function App() {
 
         <ProtectedRoute exact path="/groups" component={Groups} />
         <ProtectedRoute exact path="/groups/create" component={GroupCreate} />
+        <ProtectedRoute exact path="/groups/:id" component={GroupInfo} />
       </Switch>
     </Router>
   );

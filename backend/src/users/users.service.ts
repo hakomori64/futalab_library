@@ -10,7 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>
+    private userRepository: Repository<User>,
   ) {}
 
   create(createUserDto: CreateUserDto) {
@@ -18,19 +18,19 @@ export class UsersService {
   }
 
   findAll() {
-    return this.userRepository.find({ relations: ["groups"] });
+    return this.userRepository.find({ relations: ['groups'] });
   }
 
   findOne(id: number) {
-    return this.userRepository.findOne(id, { relations: ["groups"] })
+    return this.userRepository.findOne(id, { relations: ['groups'] });
   }
 
   findOneBy(condition: {}) {
     return this.userRepository.findOne(condition);
-  } 
+  }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return this.userRepository.save({ ...updateUserDto, id: Number(id) })
+    return this.userRepository.save({ ...updateUserDto, id: Number(id) });
   }
 
   async set(id: number, setUserDto: SetUserDto) {
@@ -41,11 +41,11 @@ export class UsersService {
         .set(setUserDto)
         .execute();
 
-      return this.userRepository.findOne(id, { relations: ["groups"] });
+      return this.userRepository.findOne(id, { relations: ['groups'] });
     } catch (exception) {
       console.log(exception);
       return {
-        "error": "something went wrong"
+        error: 'something went wrong',
       };
     }
   }

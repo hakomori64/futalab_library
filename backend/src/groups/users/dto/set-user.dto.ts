@@ -1,7 +1,7 @@
-type setFunc = () => string
+type setFunc = () => string;
 
 export class SetUserDto {
     constructor(
-        readonly name?: setFunc | string
+        readonly name?: setFunc | string,
     ) {}
 }

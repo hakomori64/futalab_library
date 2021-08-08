@@ -14,7 +14,7 @@ export class Borrow {
     @ManyToOne(type => User, (user: User) => user.borrows)
     @JoinColumn({
         name: 'user_id',
-        referencedColumnName: 'id'
+        referencedColumnName: 'id',
     })
     user: User;
 
@@ -24,7 +24,7 @@ export class Borrow {
     @ManyToOne(type => Book, (book) => book.borrows)
     @JoinColumn({
         name: 'book_id',
-        referencedColumnName: 'id'
+        referencedColumnName: 'id',
     })
     book: Book;
 

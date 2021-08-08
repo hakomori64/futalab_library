@@ -1,8 +1,8 @@
-import { User } from "src/users/entities/user.entity";
-import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Book } from "../book/entities/book.entity";
-import { Borrow } from "../borrow/entities/borrow.entity";
-import { Return } from "../return/entities/return.entity";
+import { User } from 'src/users/entities/user.entity';
+import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Book } from '../book/entities/book.entity';
+import { Borrow } from '../borrow/entities/borrow.entity';
+import { Return } from '../return/entities/return.entity';
 
 @Entity({name: 'groups'})
 export class Group {

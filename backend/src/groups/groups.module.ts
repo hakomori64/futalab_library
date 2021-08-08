@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { GroupsController } from './groups.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -23,6 +23,6 @@ import { User } from 'src/users/entities/user.entity';
     GroupUsersModule,
   ],
   controllers: [GroupsController],
-  providers: [GroupsService]
+  providers: [GroupsService],
 })
 export class GroupsModule {}

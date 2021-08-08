@@ -8,15 +8,15 @@ import { AuthGuard } from '@nestjs/passport';
 @UseGuards(AuthGuard('jwt'))
 export class ReturnController {
   private readonly logger = new Logger(ReturnController.name);
-  
+
   constructor(private readonly returnService: ReturnService) {}
 
   @Post()
   create(@Request() req, @Body() createReturnDto: CreateReturnDto) {
     const data = {
       ...createReturnDto,
-      user_id: req.user.id
-    }
+      user_id: req.user.id,
+    };
     return this.returnService.create(data);
   }
 
@@ -34,7 +34,7 @@ export class ReturnController {
   update(@Request() req, @Param('id') id: string, @Body() updateReturnDto: UpdateReturnDto) {
     const data = {
       ...updateReturnDto,
-      user_id: req.user.id
+      user_id: req.user.id,
     };
     return this.returnService.update(+id, data);
   }

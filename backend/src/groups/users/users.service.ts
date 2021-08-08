@@ -1,7 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { SetUserDto } from './dto/set-user.dto';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -19,21 +16,21 @@ export class UsersService {
   findAll(group_id: number) {
     return this.userRepository.find({
       join: { alias: 'users', innerJoin: { groups: 'users.groups' }},
-      relations: ["groups"],
+      relations: ['groups'],
       where: qb => {
-        qb.where('groups.id = :id', { id: group_id })
-      }
+        qb.where('groups.id = :id', { id: group_id });
+      },
     });
   }
 
   findOne(group_id: number, id: number) {
     return this.userRepository.findOne(id, {
       join: { alias: 'users', innerJoin: { groups: 'users.groups' }},
-      relations: ["groups"],
+      relations: ['groups'],
       where: qb => {
-        qb.where('groups.id = :id', { id: group_id })
+        qb.where('groups.id = :id', { id: group_id });
       },
-    })
+    });
   }
 
   async addGroup(user_id: number, group_id: number) {

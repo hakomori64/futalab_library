@@ -12,7 +12,9 @@ import { RentalsModule } from './groups/rentals/rentals.module';
 import { UsersModule } from './users/users.module';
 import { GroupsModule } from './groups/groups.module';
 import { AuthModule } from './auth/auth.module';
-import { InvitationsModule } from './groups/invitations/invitations.module';
+import { GroupInvitationsModule } from './groups/invitations/invitations.module';
+import { InvitationsModule } from './invitations/invitations.module';
+import { Group } from './groups/entities/group.entity';
 
 @Module({
   imports: [
@@ -46,6 +48,7 @@ import { InvitationsModule } from './groups/invitations/invitations.module';
     GroupsModule,
     AuthModule,
     InvitationsModule,
+    GroupInvitationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

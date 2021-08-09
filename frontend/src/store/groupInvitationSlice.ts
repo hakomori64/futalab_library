@@ -1,22 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Invitation } from '../types';
-import { getInvitations } from '../repositories/invitationRepository';
+import { getInvitations } from '../repositories/groupInvitationRepository';
 
 import { AppDispatch, RootState } from '.';
 
-type InvitationState = {
+type GroupInvitationState = {
     loading: boolean,
     error: Error | null,
     invitations: Invitation[],
-};
+}
 
-export const invitationSlice = createSlice({
-    name: 'invitation',
+export const groupInvitationSlice = createSlice({
+    name: 'groupInvitation',
     initialState: {
         loading: false,
         error: null,
-        invitations: [] as Invitation[],
-    } as InvitationState,
+        invitations: [] as Invitation[]
+    } as GroupInvitationState,
     reducers: {
         fetchStart(state) {
             state.loading = true;
@@ -36,12 +36,12 @@ export const invitationSlice = createSlice({
 
 export const {
     fetchStart, fetchFailure, fetchSuccess,
-} = invitationSlice.actions;
+} = groupInvitationSlice.actions;
 
-export const fetchInvitations = () => async (dispatch: AppDispatch) => {
+export const fetchInvitations = (group_id: number) => async (dispatch: AppDispatch) => {
     try {
         dispatch(fetchStart());
-        dispatch(fetchSuccess(await getInvitations()));
+        dispatch(fetchSuccess(await getInvitations(group_id)));
     } catch (error) {
         dispatch(fetchFailure(error));
     }
@@ -49,6 +49,6 @@ export const fetchInvitations = () => async (dispatch: AppDispatch) => {
 
 // selectors
 
-export const selectInvitation = (state: RootState) => state.invitation;
+export const selectGroupInvitation = (state: RootState) => state.groupInvitation;
 
-export default invitationSlice.reducer;
+export default groupInvitationSlice.reducer;

@@ -11,7 +11,7 @@ import { ReturnModule } from './return/return.module';
 import { BookModule } from './book/book.module';
 import { GroupUsersModule } from './users/users.module';
 import { User } from 'src/users/entities/user.entity';
-import { InvitationsModule } from './invitations/invitations.module';
+import { GroupInvitationsModule } from './invitations/invitations.module';
 
 @Module({
   imports: [
@@ -22,9 +22,10 @@ import { InvitationsModule } from './invitations/invitations.module';
     BorrowModule,
     RentalsModule,
     GroupUsersModule,
-    InvitationsModule,
+    GroupInvitationsModule,
   ],
   controllers: [GroupsController],
   providers: [GroupsService],
+  exports: [GroupsService],
 })
 export class GroupsModule {}

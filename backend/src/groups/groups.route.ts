@@ -5,7 +5,7 @@ import { BookModule } from './book/book.module';
 import { ReturnModule } from './return/return.module';
 import { BorrowModule } from './borrow/borrow.module';
 import { GroupUsersModule } from './users/users.module';
-import { InvitationsModule } from './invitations/invitations.module';
+import { GroupInvitationsModule } from './invitations/invitations.module';
 
 export const route: Routes = [
     {
@@ -34,7 +34,7 @@ export const route: Routes = [
             },
             {
                 path: ':groupId/invitations',
-                module: InvitationsModule,
+                module: GroupInvitationsModule,
             },
         ],
     },

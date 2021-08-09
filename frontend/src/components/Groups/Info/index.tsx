@@ -3,31 +3,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { Form } from "react-bootstrap";
 import { fetchGroups, selectGroup } from "../../../store/groupSlice";
 import InviteForm from "./InviteForm";
-import { fetchInvitations, selectInvitation } from "store/invitationSlice";
+import { fetchInvitations, selectGroupInvitation } from "store/groupInvitationSlice";
+import { useParams } from "react-router-dom";
 
 type GroupInfoParams = {
-    id: string
-}
+    id: string;
+};
 
 const GroupInfo = () => {
+    const { id } = useParams<GroupInfoParams>();
     const dispatch = useDispatch();
     const { loading, selectedGroupId, groups } = useSelector(selectGroup);
-    const { invitations } = useSelector(selectInvitation);
+    const { invitations } = useSelector(selectGroupInvitation);
 
     useEffect(() => {
         (async () => {
-            if (selectedGroupId != null) {
+            if (groups.length === 0) {
                 dispatch(fetchGroups());
-                dispatch(fetchInvitations(selectedGroupId));
+                dispatch(fetchInvitations(+id));
             }
         })();
-    }, [dispatch, selectedGroupId]);
+    }, [dispatch]);
 
     if (loading) {
         return (<div>loading...</div>);
     }
 
-    const group = groups.find((group) => group.id === selectedGroupId);
+    const group = groups.find((group) => group.id === +id);
     if (group === undefined) {
         return (<div>No such group</div>);
     }

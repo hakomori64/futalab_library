@@ -7,9 +7,11 @@ import { selectGroup, setSelectedGroupId } from '../store/groupSlice';
 
 import "./Header.css";
 import { Group } from "types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const Header = () => {
-  const { isAuthenticated, logout, loginWithRedirect } = useAuth0();
+  const { isAuthenticated, logout, loginWithRedirect, user } = useAuth0();
   const { loading, error, groups, selectedGroupId } = useSelector(selectGroup);
 
   const index: number = groups.findIndex((group) => (group.id == selectedGroupId));
@@ -42,9 +44,10 @@ const Header = () => {
               <Nav.Link>貸出・返却履歴一覧</Nav.Link>
             </LinkContainer>
           </Nav>
-          <Nav>
-            <Nav.Link onClick={() => {logout({ returnTo: window.location.origin })}}>ログアウト</Nav.Link>
-          </Nav>
+          <NavDropdown title={<span><FontAwesomeIcon icon={faUser}/> {user ? user.name : 'ユーザー設定'}</span>} id="user-dropdown">
+            <NavDropdown.Item href="/invitations">未承認の招待一覧</NavDropdown.Item>
+            <NavDropdown.Item onClick={() => {logout({ returnTo: window.location.origin })}}>ログアウト</NavDropdown.Item>
+          </NavDropdown>
         </Navbar.Collapse>
         </>
       ] : [

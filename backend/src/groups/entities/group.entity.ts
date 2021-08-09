@@ -1,4 +1,4 @@
-import { Invitation } from 'src/groups/invitations/entities/invitation.entity';
+import { Invitation } from 'src/invitations/entities/invitation.entity';
 import { User } from 'src/users/entities/user.entity';
 import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Book } from '../book/entities/book.entity';

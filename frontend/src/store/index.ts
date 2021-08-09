@@ -3,6 +3,7 @@ import groupReducer from './groupSlice';
 import bookReducer from './bookSlice';
 import rentalReducer from './rentalSlice';
 import invitationReducer from './invitationSlice';
+import groupInvitationReducer from './groupInvitationSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     book: bookReducer,
     rental: rentalReducer,
     invitation: invitationReducer,
+    groupInvitation: groupInvitationReducer,
   },
 });
 

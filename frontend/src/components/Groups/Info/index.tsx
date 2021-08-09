@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Form } from "react-bootstrap";
 import { fetchGroups, selectGroup } from "../../../store/groupSlice";
 import InviteForm from "./InviteForm";
+import { fetchInvitations, selectInvitation } from "store/invitationSlice";
 
 type GroupInfoParams = {
     id: string
@@ -11,11 +12,13 @@ type GroupInfoParams = {
 const GroupInfo = () => {
     const dispatch = useDispatch();
     const { loading, selectedGroupId, groups } = useSelector(selectGroup);
+    const { invitations } = useSelector(selectInvitation);
 
     useEffect(() => {
         (async () => {
             if (selectedGroupId != null) {
                 dispatch(fetchGroups());
+                dispatch(fetchInvitations(selectedGroupId));
             }
         })();
     }, [dispatch, selectedGroupId]);
@@ -38,6 +41,13 @@ const GroupInfo = () => {
         <ol>
             {group.users.map((user) => (
                 <li>{user.name}</li>
+            ))}
+        </ol>
+
+        <h4>招待中</h4>
+        <ol>
+            {invitations.map((invitation) => (
+                <li>{invitation.user.email}</li>
             ))}
         </ol>
 

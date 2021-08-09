@@ -1,3 +1,4 @@
+import { Invitation } from 'src/groups/invitations/entities/invitation.entity';
 import { User } from 'src/users/entities/user.entity';
 import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Book } from '../book/entities/book.entity';
@@ -26,4 +27,7 @@ export class Group {
 
     @OneToMany((type) => Borrow, (borrow: Borrow) => borrow.group)
     borrows: Borrow[];
+
+    @OneToMany((type) => Invitation, (invitation: Invitation) => invitation.group)
+    invitations: Invitation[];
 }

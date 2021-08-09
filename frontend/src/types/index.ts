@@ -48,3 +48,11 @@ export type Return = {
 	book_id: number,
 	quantity: number,
 }
+
+export type Invitation = {
+	id: number,
+	user_id: number,
+	user: User,
+	group_id: number,
+	group: Group
+}

@@ -12,6 +12,7 @@ import { RentalsModule } from './groups/rentals/rentals.module';
 import { UsersModule } from './users/users.module';
 import { GroupsModule } from './groups/groups.module';
 import { AuthModule } from './auth/auth.module';
+import { InvitationsModule } from './groups/invitations/invitations.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { AuthModule } from './auth/auth.module';
     UsersModule,
     GroupsModule,
     AuthModule,
+    InvitationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

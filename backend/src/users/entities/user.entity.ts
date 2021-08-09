@@ -1,6 +1,7 @@
 import { Borrow } from 'src/groups/borrow/entities/borrow.entity';
 import { Group } from 'src/groups/entities/group.entity';
 import { Return } from 'src/groups/return/entities/return.entity';
+import { Invitation } from 'src/groups/invitations/entities/invitation.entity';
 import { Column, Entity, Index, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({name: 'users'})
@@ -11,10 +12,6 @@ export class User {
     @Column({ length: 1024 })
     @Index({ unique: true })
     email: string;
-
-    @Column({ length: 1024 })
-    @Index({ unique: true })
-    sub: string;
 
     @Column({ nullable: true, type: 'varchar', length: 1024 })
     name: string | null;
@@ -28,4 +25,7 @@ export class User {
 
     @OneToMany((type) => Borrow, (borrow: Borrow) => borrow.user)
     borrows: Borrow[];
+
+    @OneToMany((type) => Invitation, (invitation: Invitation) => invitation.user)
+    invitations: Invitation[];
 }

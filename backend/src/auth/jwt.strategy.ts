@@ -32,7 +32,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
             done(new UnauthorizedException(), false);
         }
 
-        const user = await this.usersService.findOneBy({ sub: payload.sub }) ?? {};
+        const user = await this.usersService.findOneBy({ email: payload['https://example.com/email'] }) ?? {};
 
         return done(null, user);
     }

@@ -21,6 +21,7 @@ import Rentals from "./components/Rentals";
 import Groups from "./components/Groups";
 import GroupInfo from "./components/Groups/Info";
 import GroupCreate from "./components/Groups/Create";
+import GroupInviteSuccess from "./components/Groups/Invite/Success";
 
 
 import { useDispatch } from 'react-redux';
@@ -64,6 +65,7 @@ function App() {
         <ProtectedRoute exact path="/groups" component={Groups} />
         <ProtectedRoute exact path="/groups/create" component={GroupCreate} />
         <ProtectedRoute exact path="/groups/:id" component={GroupInfo} />
+        <ProtectedRoute exact path="/groups/:id/invite/success" component={GroupInviteSuccess} />
       </Switch>
     </Router>
   );

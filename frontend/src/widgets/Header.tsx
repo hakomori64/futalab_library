@@ -47,6 +47,7 @@ const Header = () => {
             </LinkContainer>
           </Nav>
           <NavDropdown title={<span><FontAwesomeIcon icon={faUser}/> {profile ? profile!.name : 'ユーザー設定'}</span>} id="user-dropdown">
+            <NavDropdown.Item href="/profile">プロフィール</NavDropdown.Item>
             <NavDropdown.Item href="/invitations">未承認の招待一覧</NavDropdown.Item>
             <NavDropdown.Item onClick={() => {logout({ returnTo: window.location.origin })}}>ログアウト</NavDropdown.Item>
           </NavDropdown>

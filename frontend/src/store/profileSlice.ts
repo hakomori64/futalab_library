@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Group, User } from '../types';
-import { getProfile } from '../repositories/userRepository';
+import { getProfile, updateProfile } from '../repositories/userRepository';
 
 import { AppDispatch, RootState } from './';
 
@@ -30,12 +30,30 @@ export const profileSlice = createSlice({
             state.loading = false;
             state.error = null;
             state.profile = action.payload;
+        },
+
+        setProfileStart(state) {
+            state.loading = true;
+            state.error = null;
+        },
+        setProfileSuccess(state, action) {
+            state.loading = false;
+            state.error = null;
+            state.profile = {
+                ...state.profile,
+                ...action.payload,
+            };
+        },
+        setProfileFailure(state, action) {
+            state.loading = false;
+            state.error = action.payload;
         }
     }
 });
 
 export const {
     fetchStart, fetchFailure, fetchSuccess,
+    setProfileStart, setProfileSuccess, setProfileFailure,
 } = profileSlice.actions;
 
 
@@ -44,6 +62,15 @@ export const fetchProfile = () => async (dispatch: AppDispatch) => {
     try {
         dispatch(fetchStart());
         dispatch(fetchSuccess(await getProfile()));
+    } catch (error) {
+        dispatch(fetchFailure(error));
+    }
+}
+
+export const setProfile = (data: {}) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(setProfileStart());
+        dispatch(setProfileSuccess(await updateProfile(data)))
     } catch (error) {
         dispatch(fetchFailure(error));
     }

@@ -2,6 +2,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Container, } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import { selectGroup, fetchGroups } from '../../store/groupSlice';
 
@@ -44,11 +46,11 @@ const Home = () => {
   }, [signup])
 
   return (
-    <div>
-      <button onClick={async () => {
-        await axios.post('http://localhost:3001/api/groups/4/users/join', { user_id: 65 });
-      }}>add user</button>
-    </div>
+    <Container>
+      <div>このアプリはグループ共有の本棚を管理するためのアプリです。</div>
+      <div>書籍の管理は<Link to="/books">こちら</Link>から</div>
+      <div>貸出・返却は<Link to="/rentals">こちら</Link>から</div>
+    </Container>
   );
 };
 

@@ -8,14 +8,12 @@ export const getProfile = async () : Promise<User> => {
     return res.data;
 }
 
-export const updateName = async (name: string) : Promise<void> => {
-    const res = await axios.put(`${craftUrl()}/profile`, {
-        name: name
-    });
+export const updateProfile = async (data: {}) : Promise<User> => {
+    const res = await axios.put(`${craftUrl()}/profile`, data);
     
     switch (res.status) {
         case 200:
-            return;
+            return res.data;
         case 400:
             throw Error('invalid data format');
         case 401:

@@ -25,6 +25,8 @@ import GroupInviteSuccess from "./components/Groups/Invite/Success";
 
 import Invitations from "./components/Invitations";
 
+import Profile from './components/Profile';
+
 
 import { useDispatch } from 'react-redux';
 import { fetchGroups } from './store/groupSlice';
@@ -75,6 +77,8 @@ function App() {
         <ProtectedRoute exact path="/groups/:id/invite/success" component={GroupInviteSuccess} />
 
         <ProtectedRoute exact path="/invitations" component={() => withHeader(Invitations)} />
+
+        <ProtectedRoute exact path="/profile" component={() => withHeader(Profile)} />
       </Switch>
     </Router>
   );

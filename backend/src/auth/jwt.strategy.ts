@@ -6,6 +6,7 @@ import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 
 import { UsersService } from 'src/users/users.service';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -32,7 +33,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
             done(new UnauthorizedException(), false);
         }
 
-        const user = await this.usersService.findOneBy({ email: payload['https://example.com/email'] }) ?? {};
+        const user = await this.usersService.findOneBy({ email: payload['https://example.com/email'] }) ?? {} as User;
 
         return done(null, user);
     }

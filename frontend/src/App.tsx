@@ -29,6 +29,7 @@ import Invitations from "./components/Invitations";
 import { useDispatch } from 'react-redux';
 import { fetchGroups } from './store/groupSlice';
 import { fetchInvitations } from './store/invitationSlice';
+import { fetchProfile } from './store/profileSlice';
 
 const withHeader = (Component: any) => (<><Header /><Container><Component /></Container></>);
 
@@ -51,6 +52,7 @@ function App() {
         });
         dispatch(fetchGroups());
         dispatch(fetchInvitations());
+        dispatch(fetchProfile());
       }
     })()
   }, [isAuthenticated, user, dispatch]);

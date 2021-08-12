@@ -23,7 +23,7 @@ const Home = () => {
         });
 
         const api_endpoint = `${process.env.REACT_APP_API_ENDPOINT}/users`;
-        if (user!.email === null || user!.sub == null) return;
+        if (user!.email === null) return;
         const email: string = user!.email! as string;
 
         //TODO(hakomori64): すでに登録されていればなにもしない 現在、500エラーが起きてなにもしないって感じになってる
@@ -36,8 +36,7 @@ const Home = () => {
           },
           body: JSON.stringify({
             email: email,
-            name: user!.name || user!.nickname || 'ゲスト',
-            sub: user!.sub
+            name: user!.name || user!.nickname || 'ゲスト'
           })
         })
       }

@@ -21,10 +21,15 @@ import Rentals from "./components/Rentals";
 import Groups from "./components/Groups";
 import GroupInfo from "./components/Groups/Info";
 import GroupCreate from "./components/Groups/Create";
+import GroupInviteSuccess from "./components/Groups/Invite/Success";
+
+import Invitations from "./components/Invitations";
 
 
 import { useDispatch } from 'react-redux';
 import { fetchGroups } from './store/groupSlice';
+import { fetchInvitations } from './store/invitationSlice';
+import { fetchProfile } from './store/profileSlice';
 
 const withHeader = (Component: any) => (<><Header /><Container><Component /></Container></>);
 
@@ -36,6 +41,7 @@ function App() {
   useEffect(() => {
     (async () => {
       if (isAuthenticated) {
+        console.log('setting bearer token...');
         const accessToken = await getAccessTokenSilently();
         axios.interceptors.request.use(async config => {
           const requestConfig = config;
@@ -45,6 +51,8 @@ function App() {
           return requestConfig;
         });
         dispatch(fetchGroups());
+        dispatch(fetchInvitations());
+        dispatch(fetchProfile());
       }
     })()
   }, [isAuthenticated, user, dispatch]);
@@ -64,6 +72,9 @@ function App() {
         <ProtectedRoute exact path="/groups" component={Groups} />
         <ProtectedRoute exact path="/groups/create" component={GroupCreate} />
         <ProtectedRoute exact path="/groups/:id" component={GroupInfo} />
+        <ProtectedRoute exact path="/groups/:id/invite/success" component={GroupInviteSuccess} />
+
+        <ProtectedRoute exact path="/invitations" component={() => withHeader(Invitations)} />
       </Switch>
     </Router>
   );

@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateUserDto {
-    @ApiProperty({ nullable: true })
+export class CreateInvitationDto {
+    @ApiProperty()
     readonly email: string;
 
     @ApiProperty()
-    readonly name: string;
+    readonly group_id: number;
 }

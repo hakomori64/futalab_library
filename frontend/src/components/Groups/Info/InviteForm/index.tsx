@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
 import { Group } from "./../../../../types";
+import { inviteUser } from "repositories/invitationRepository";
 
 const InviteForm = ({ group }: { group: Group }) => {
+
+    const history = useHistory();
 
     const [email, setEmail] = useState("");
     const [emailErr, setEmailErr] = useState("");
@@ -29,7 +33,12 @@ const InviteForm = ({ group }: { group: Group }) => {
         }
 
         if (!errorOccured) {
-            // send email to invite user
+            try {
+                await inviteUser(group.id, email);
+                history.push(`/groups/${group.id}/invite/success`)
+            } catch (error) {
+                setError('招待に失敗しました');
+            }
         }
     }
 

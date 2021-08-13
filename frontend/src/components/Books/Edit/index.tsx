@@ -1,10 +1,9 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { RouteComponentProps, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { fetchBooks, selectBook } from "store/bookSlice";
 import { selectGroup } from "store/groupSlice";
-import { Book } from "../../../types";
 import { uploadPhoto } from '../../../repositories/photoRepository';
 import { updateBook } from "repositories/bookRepository";
 
@@ -15,7 +14,7 @@ type BookEditParams = {
 const BookEdit = () => {
 
   const dispatch = useDispatch();
-  const { loading, books } = useSelector(selectBook);
+  const { books } = useSelector(selectBook);
   const { selectedGroupId } = useSelector(selectGroup);
   const { id } = useParams<BookEditParams>();
 

@@ -12,7 +12,7 @@ const Rentals = () => {
 
   const dispatch = useDispatch();
   const { selectedGroupId } = useSelector(selectGroup);
-  const { loading, error, rentals } = useSelector(selectRental)
+  const { rentals } = useSelector(selectRental)
 
   const history = useHistory();
 

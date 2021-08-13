@@ -41,7 +41,7 @@ const Profile = () => {
                 dispatch(fetchProfile());
             }
         })();
-    }, [dispatch]);
+    }, [dispatch, profile]);
 
     if (loading) {
         return (<div>loading...</div>);

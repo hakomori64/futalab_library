@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Group, User } from '../types';
+import { User } from '../types';
 import { getProfile, updateProfile } from '../repositories/userRepository';
 
 import { AppDispatch, RootState } from './';

@@ -2,10 +2,9 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { Invitation, Group } from "../../types";
 import { useAuth0 } from "@auth0/auth0-react";
 import { fetchInvitations, selectInvitation } from "../../store/invitationSlice";
-import { fetchGroups, selectGroup, setSelectedGroupId } from "../../store/groupSlice";
+import { fetchGroups, setSelectedGroupId } from "../../store/groupSlice";
 import { acceptInvitation, discardInvitation } from "../../repositories/invitationRepository";
 
 
@@ -21,7 +20,7 @@ const Invitations = () => {
                 dispatch(fetchInvitations());
             }
         })();
-    }, [dispatch]);
+    }, [dispatch, isAuthenticated]);
 
     if (loading) {
         return (<div>loading...</div>);

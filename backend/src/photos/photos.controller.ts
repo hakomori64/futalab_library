@@ -31,7 +31,7 @@ export class PhotosController {
   uploadCoverImage(@UploadedFile() file: Express.Multer.File) {
     this.logger.log(file);
     return {
-      cover_image_url: `${this.configService.get('SERVER_URL')}/${this.configService.get('SERVER_PREFIX')}/photos/${file.filename}`,
+      cover_image_url: `${this.configService.get('HOST')}:${this.configService.get('PORT')}/${this.configService.get('SERVER_PREFIX')}/photos/${file.filename}`,
     };
   }
 

@@ -1,12 +1,11 @@
-import { FC, useEffect, useState } from "react";
+import { useEffect, } from "react";
 import { Button, Table } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { RouteComponentProps, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import noimage from "./../../../img/NoImage.svg";
-import { Book } from "../../../types";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBooks, selectBook } from "store/bookSlice";
-import { selectGroup, setSelectedGroupId } from "store/groupSlice";
+import { selectGroup, } from "store/groupSlice";
 
 type BookInfoParams = {
   id: string;

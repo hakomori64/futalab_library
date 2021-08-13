@@ -24,8 +24,6 @@ const BookBorrow = () => {
 
   const [error, setError] = useState('');
 
-  const history = useHistory();
-
   const book = books.find((book) => book.id === +id);
   const group = groups.find((group) => group.id === selectedGroupId);
 

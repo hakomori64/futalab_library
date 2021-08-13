@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Form } from "react-bootstrap";
 import { fetchGroups, selectGroup } from "../../../store/groupSlice";
 import InviteForm from "./InviteForm";
 import { fetchInvitations, selectGroupInvitation } from "store/groupInvitationSlice";
@@ -13,7 +12,7 @@ type GroupInfoParams = {
 const GroupInfo = () => {
     const { id } = useParams<GroupInfoParams>();
     const dispatch = useDispatch();
-    const { loading, selectedGroupId, groups } = useSelector(selectGroup);
+    const { loading, groups } = useSelector(selectGroup);
     const { invitations } = useSelector(selectGroupInvitation);
 
     useEffect(() => {
@@ -23,7 +22,7 @@ const GroupInfo = () => {
                 dispatch(fetchInvitations(+id));
             }
         })();
-    }, [dispatch]);
+    }, [dispatch, groups.length, id]);
 
     if (loading) {
         return (<div>loading...</div>);

@@ -146,7 +146,7 @@ const BookCreate = () => {
           {coverImageUrl !== "" &&
             <div style={{width: "180px", height: "280px" }}>
               <Button className="btn btn-circle button-close" onClick={() => setCoverImageUrl("")}>リセット</Button>
-              <img src={coverImageUrl} width="180px" height="240px" />
+              <img src={coverImageUrl} alt="uploaded image" width="180px" height="240px" />
             </div>}
           {coverImageUrlErr !== "" && <span className="small text-danger">{coverImageUrlErr}</span>}
         </Form.Group>

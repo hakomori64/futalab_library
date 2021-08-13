@@ -1,19 +1,12 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Container, } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import { selectGroup, fetchGroups } from '../../store/groupSlice';
-
 const Home = () => {
-  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
   const signup = user ? user!['https://example.com/signup'] ?? false : false;
 
-  const dispatch = useDispatch();
-  const { loading, error, groups } = useSelector(selectGroup);
-  
   useEffect(() => {
     (async () => {
       if (signup) {
@@ -29,7 +22,7 @@ const Home = () => {
         const email: string = user!.email! as string;
 
         //TODO(hakomori64): すでに登録されていればなにもしない 現在、500エラーが起きてなにもしないって感じになってる
-        const result = await fetch(api_endpoint, {
+        await fetch(api_endpoint, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -43,7 +36,7 @@ const Home = () => {
         })
       }
     })()
-  }, [signup])
+  }, [signup, user, getAccessTokenSilently])
 
   return (
     <Container>

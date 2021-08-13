@@ -1,11 +1,10 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { RouteComponentProps, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { fetchBooks, selectBook } from "store/bookSlice";
 import { fetchRentals } from "store/rentalSlice";
 import { selectGroup } from "store/groupSlice";
-import { Book } from "../../../types";
 import { borrowBook } from '../../../repositories/borrowRepository';
 
 type RentalBorrowParams = {

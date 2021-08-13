@@ -12,11 +12,11 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { selectProfile } from "store/profileSlice";
 
 const Header = () => {
-  const { isAuthenticated, logout, loginWithRedirect, user } = useAuth0();
-  const { loading, error, groups, selectedGroupId } = useSelector(selectGroup);
+  const { isAuthenticated, logout, loginWithRedirect, } = useAuth0();
+  const { loading, groups, selectedGroupId } = useSelector(selectGroup);
   const { profile } = useSelector(selectProfile);
 
-  const index: number = groups.findIndex((group) => (group.id == selectedGroupId));
+  const index: number = groups.findIndex((group) => (group.id === selectedGroupId));
 
   const dispatch = useDispatch();
 

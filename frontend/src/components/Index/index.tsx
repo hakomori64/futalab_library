@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Link } from "react-router-dom";
 
 const Index = () => {
   const { isLoading, isAuthenticated } = useAuth0();
@@ -11,7 +10,7 @@ const Index = () => {
     if (isAuthenticated) {
       history.push('/home');
     }
-  }, []);
+  }, [history, isAuthenticated]);
 
   //TODO show loading screen
   if (isLoading) {

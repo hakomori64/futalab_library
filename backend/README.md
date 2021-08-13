@@ -62,7 +62,7 @@ $ npm run test:cov
 
 ## docs
 
-${SERVER_URL}/docs
+${HOST}:${PORT}/docs
 
 ## Support
 

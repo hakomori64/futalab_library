@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { fetchBooks, selectBook } from "store/bookSlice";
 import { fetchRentals } from "store/rentalSlice";
 import { selectGroup } from "store/groupSlice";

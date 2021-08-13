@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Card, Table, Nav, Button, CardDeck, Col } from "react-bootstrap";
+import { useEffect, } from "react";
+import { Card, Table, Button, CardDeck, Col } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import noimage from "./../../img/NoImage.svg";
 import { Book } from "../../types";
@@ -32,7 +32,7 @@ const BooksInfoTable = ({ isbn, quantity }: BooksInfoTableProps) => {
 const Books = () => {
   const dispatch = useDispatch();
   const { selectedGroupId } = useSelector(selectGroup)
-  const { loading, error, books } = useSelector(selectBook);
+  const { loading, books } = useSelector(selectBook);
 
   useEffect(() => {
     (async () => {

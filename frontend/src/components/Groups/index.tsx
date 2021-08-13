@@ -11,7 +11,7 @@ import { faArrowRight, faCog } from '@fortawesome/free-solid-svg-icons'
 
 const Groups = () => {
     const dispatch = useDispatch();
-    const { groups, selectedGroupId, error, loading } = useSelector(selectGroup);
+    const { groups, } = useSelector(selectGroup);
     const history = useHistory();
 
     useEffect(() => {

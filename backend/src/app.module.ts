@@ -20,6 +20,7 @@ import { Group } from './groups/entities/group.entity';
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
+      ignoreEnvFile: process.env.NODE_ENV !== 'development',
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({

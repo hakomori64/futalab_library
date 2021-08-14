@@ -34,11 +34,7 @@ import { Group } from './groups/entities/group.entity';
         password: configService.get('DATABASE_PASSWORD'),
         database: configService.get('DATABASE_NAME'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        migrations: [ 'src/migration/*{.ts,.js}'],
-        cli: {
-          migrationsDir: 'src/migration'
-        },
-        synchronize: (process.env.NODE_ENV === 'development'),
+        synchronize: true,
       }),
     }),
     MulterModule.register({

@@ -14,10 +14,13 @@ async function bootstrap() {
       console.log('found it!');
       await manager.get('default').close();
     }
+
     const app = await NestFactory.create(AppModule, {
       logger: ['log', 'debug', 'warn', 'error'],
     });
     const configService = app.get(ConfigService);
+    console.log(`port1: ${process.env.PORT}`);
+    console.log(`port2: ${configService.get('PORT')}`);
     app.setGlobalPrefix('api');
 
     const config = new DocumentBuilder()

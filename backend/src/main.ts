@@ -12,7 +12,7 @@ async function bootstrap() {
     console.log('checking default connection exists');
     if (manager.has('default')) {
       console.log('found it!');
-      manager.get('default').close();
+      await manager.get('default').close();
     }
     const app = await NestFactory.create(AppModule, {
       logger: ['log', 'debug', 'warn', 'error'],

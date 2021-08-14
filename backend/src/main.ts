@@ -24,10 +24,11 @@ async function bootstrap() {
 
   app.enableCors({
     origin: '*',
-    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+    methods: 'GET, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH, HEAD',
+    allowedHeaders: 'X-Requested-With, Origin, X-Csrftoken, Content-Type, Accept, Authorization',
   });
 
-  await app.listen(configService.get('PORT') | 8000);
+  await app.listen(configService.get('PORT') | 3001);
 
   if (module.hot) {
     module.hot.accept();

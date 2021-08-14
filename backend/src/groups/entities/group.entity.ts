@@ -1,5 +1,5 @@
-import { Invitation } from 'src/invitations/entities/invitation.entity';
-import { User } from 'src/users/entities/user.entity';
+import { Invitation } from '../../invitations/entities/invitation.entity';
+import { User } from '../../users/entities/user.entity';
 import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Book } from '../book/entities/book.entity';
 import { Borrow } from '../borrow/entities/borrow.entity';

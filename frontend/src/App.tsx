@@ -43,9 +43,8 @@ function App() {
   useEffect(() => {
     (async () => {
       if (isAuthenticated) {
-        console.log('setting bearer token...');
         const accessToken = await getAccessTokenSilently();
-        axios.interceptors.request.use(async config => {
+        axios.interceptors.request.use(async (config) => {
           const requestConfig = config;
           if (accessToken) {
             requestConfig.headers.common.Authorization = `Bearer ${accessToken}`;
@@ -57,7 +56,7 @@ function App() {
         dispatch(fetchProfile());
       }
     })()
-  }, [isAuthenticated, user, dispatch, getAccessTokenSilently]);
+  }, [isAuthenticated, user, dispatch, getAccessTokenSilently ]);
   return (
     <Router>
       <Switch>

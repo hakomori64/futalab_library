@@ -1,5 +1,5 @@
-import { Group } from "src/groups/entities/group.entity";
-import { User } from "src/users/entities/user.entity";
+import { Group } from "../../groups/entities/group.entity";
+import { User } from "../../users/entities/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name: 'invitations'})

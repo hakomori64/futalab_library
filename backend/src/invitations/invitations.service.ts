@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ManagementClient, AuthenticationClient } from "auth0";
-import { GroupsService } from 'src/groups/groups.service';
-import { User } from 'src/users/entities/user.entity';
-import { UsersService } from 'src/users/users.service';
+import { GroupsService } from '../groups/groups.service';
+import { User } from '../users/entities/user.entity';
+import { UsersService } from '../users/users.service';
 import { Repository } from 'typeorm';
 import { CreateInvitationDto } from './dto/create-invitation.dto';
 import { UpdateInvitationDto } from './dto/update-invitation.dto';

@@ -1,7 +1,7 @@
 import { Book } from '../../book/entities/book.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Group } from 'src/groups/entities/group.entity';
-import { User } from 'src/users/entities/user.entity';
+import { Group } from '../../../groups/entities/group.entity';
+import { User } from '../../..//users/entities/user.entity';
 
 @Entity({name: 'borrows'})
 export class Borrow {

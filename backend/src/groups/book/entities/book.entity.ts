@@ -2,7 +2,7 @@ import { Expose } from 'class-transformer';
 import { Borrow } from '../../borrow/entities/borrow.entity';
 import { Return } from '../../return/entities/return.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
-import { Group } from 'src/groups/entities/group.entity';
+import { Group } from '../../../groups/entities/group.entity';
 
 @Entity({name: 'books'})
 export class Book {

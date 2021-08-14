@@ -9,7 +9,9 @@ declare const module: any;
 async function bootstrap() {
   try {
     const manager = getConnectionManager();
+    console.log('checking default connection exists');
     if (manager.has('default')) {
+      console.log('found it!');
       manager.get('default').close();
     }
     const app = await NestFactory.create(AppModule, {
@@ -41,7 +43,7 @@ async function bootstrap() {
       module.hot.dispose(() => app.close());
     }
   } catch (err) {
-
+    console.log(`caught error ${err}`);
   }
 }
 bootstrap();

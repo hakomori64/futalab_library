@@ -39,7 +39,7 @@ async function bootstrap() {
       allowedHeaders: 'X-Requested-With, Origin, X-Csrftoken, Content-Type, Accept, Authorization',
     });
 
-    await app.listen((process.env.NODE_ENV === 'development' ? configService.get('PORT') : Number(process.env.PORT)) | 3001);
+    await app.listen(process.env.PORT || 3001);
 
     if (module.hot) {
       module.hot.accept();

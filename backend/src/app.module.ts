@@ -34,6 +34,7 @@ import { Group } from './groups/entities/group.entity';
         database: configService.get('DATABASE_NAME'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: true,
+        keepConnectionAlive: true,
       }),
     }),
     MulterModule.register({

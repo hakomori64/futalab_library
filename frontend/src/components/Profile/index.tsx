@@ -67,7 +67,7 @@ const Profile = () => {
                 ) : (
                     <div>{profile!.name}</div>
                 )}</Col>
-                <Col xs={3}><Button onClick={handleButtonPressed}>{(editing) ? '編集' : '保存'}</Button></Col>
+                <Col xs={3}><Button onClick={handleButtonPressed}>{(editing) ? '保存' : '編集'}</Button></Col>
             </Row>
             {nameErr && <span className="text-danger small">{nameErr}</span>}
         </Container>

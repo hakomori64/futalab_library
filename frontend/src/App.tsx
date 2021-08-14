@@ -56,7 +56,7 @@ function App() {
         dispatch(fetchProfile());
       }
     })()
-  }, [isAuthenticated, user, dispatch ]);
+  }, [isAuthenticated, user, dispatch, getAccessTokenSilently ]);
   return (
     <Router>
       <Switch>

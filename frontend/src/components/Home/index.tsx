@@ -36,7 +36,7 @@ const Home = () => {
         })
       }
     })()
-  }, [signup, user, getAccessTokenSilently])
+  }, [signup, user, ])
 
   return (
     <Container>

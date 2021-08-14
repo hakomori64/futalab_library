@@ -3,8 +3,8 @@ import { InvitationsService } from './invitations.service';
 import { InvitationsController } from './invitations.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Invitation } from './entities/invitation.entity';
-import { UsersModule } from 'src/users/users.module';
-import { GroupsModule } from 'src/groups/groups.module';
+import { UsersModule } from '../users/users.module';
+import { GroupsModule } from '../groups/groups.module';
 
 @Module({
   imports: [

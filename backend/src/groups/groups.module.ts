@@ -10,7 +10,7 @@ import { RentalsModule } from './rentals/rentals.module';
 import { ReturnModule } from './return/return.module';
 import { BookModule } from './book/book.module';
 import { GroupUsersModule } from './users/users.module';
-import { User } from 'src/users/entities/user.entity';
+import { User } from '../users/entities/user.entity';
 import { GroupInvitationsModule } from './invitations/invitations.module';
 
 @Module({

@@ -9,7 +9,7 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ length: 1024 })
+    @Column({ length: 255 })
     @Index({ unique: true })
     email: string;
 
